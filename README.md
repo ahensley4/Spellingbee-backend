@@ -142,3 +142,21 @@ Body (JSON):
 - Flask + Flask-RESTful
 - MySQL
 - Thunder Client or Postman (for testing API)
+
+## 🗄️ Database Dump Files
+
+This project includes SQL table dumps for the backend MySQL database. To restore them, use the following commands in your MySQL terminal:
+
+```bash
+mysql -u root -p spelling_bee < spelling_bee_game_sessions.sql
+mysql -u root -p spelling_bee < spelling_bee_guesses.sql
+mysql -u root -p spelling_bee < spelling_bee_valid_words.sql
+```
+
+Be sure the `spelling_bee` database already exists before running the imports:
+
+```bash
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS spelling_bee;"
+```
+
+Then import the tables.
