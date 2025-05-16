@@ -1,0 +1,55 @@
+body {
+    margin: 100px;
+}
+
+.square {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
+    gap: 10px; /* create gaps between grids */
+}
+
+.square > div {
+    background: lightgrey;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #777;
+}
+
+/* make the 4th square in yellow */
+.square > div:nth-child(4) {
+    background-color: #ffcc00;
+}
+
+/*create hexagon shape*/
+/*body {
+    height: 10vh;
+    display: grid;
+    place-items: center;
+}
+
+.hexagon {
+    width: 150px;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-top: 150px solid lightgrey;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.hexagon::after {
+    content: "";
+    width: 100%;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-bottom: 150px solid lightgrey;
+    position: absolute;
+    left: 50%;
+    top: -224px;
+    transform: translate(-50%,-50%);
+    /*transform: rotate(180deg);
+}*/
+
