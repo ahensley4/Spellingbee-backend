@@ -1,33 +1,32 @@
-/* still working on this file */
-/* function to generate random letter */
-/*function getRandomLetter() {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const randomIndex = Math.floor(Math.random() * alphabet.length);
-  return alphabet[randomIndex];
-}
+/*Play.js file*/
 
-// Example usage:
-const randomLetter = getRandomLetter();
-console.log(randomLetter);*/
+/* function to generate random sample string */
+function generateRandomString(length) {
+    let result = '';
+    const usedChars = new Set();
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; /* generate string with capital alphabet */
 
-/*function get_random_letter() {
-    var random_string ='';
-    var letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    for(var i,i = 0; i < 7; i++) {
-        random_string += characters.charAt(Math.floor(Math.random() * 7))
-    }
-    return random_string
-}*/
+    while (result.length < length) {
+        /* generate random character */
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        const randomChar = characters.charAt(randomIndex);
 
-/*let div = document.querySelector("div");
-
-div.innerText = get_random_string(7);
-function get_random_letter(num_letter) {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let result = "";
-    for(var i,i = 0; i < num_letter; i++) {
-        random_string += characters.charAt(Math.floor(Math.random() * num_letter))
+        /* make sure to have a string with non-repeated characters */
+        if (!usedChars.has(randomChar)) {
+            result += randomChar;
+            usedChars.add(randomChar);
+        }
     }
     return result;
 }
-*/
+
+/* call generateRandomString function */
+const randomString = generateRandomString(7); 
+console.log("random string: " + randomString);
+for (let i = 0; i < 7; i++) {
+    console.log("random string: " + randomString[i]);
+    /* retreive the element whose id = i in play.html */
+    var elem = document.getElementById(i);
+    /* display the element whose id = i */
+    elem.innerHTML = randomString.slice(i, i+1);
+}
