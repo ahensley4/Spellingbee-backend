@@ -30,3 +30,8 @@ for (let i = 0; i < 7; i++) {
     /* display the element whose id = i */
     elem.innerHTML = randomString.slice(i, i+1);
 }
+
+/* function to output the element in the boxes */
+function displayElement(i) {
+    document.getElementById("display").innerHTML = document.getElementById(i).innerHTML;
+}
