@@ -2,9 +2,15 @@ body {
     margin: 100px;
 }
 
+p {
+    text-align: center;
+    font-size: 100px;
+}
+
 .square {
     max-width: 700px;
     margin: 0 auto;
+    margin-top: 300px;
     display: grid;
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
     gap: 10px; /* create gaps between grids */
