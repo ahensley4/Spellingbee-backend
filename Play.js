@@ -1,21 +1,31 @@
 /*Play.js file*/
 
+/*tell browser to assign keyPressed anytime someone presses down a key*/
+/*document.onkeydown = keyPressed;*/
+
 /* function to generate random sample string */
 function generateRandomString(length) {
     let result = '';
     const usedChars = new Set();
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; /* generate string with capital alphabet */
+    /*const vowel = 'AEIOU';*/
 
     while (result.length < length) {
         /* generate random character */
         const randomIndex = Math.floor(Math.random() * characters.length);
         const randomChar = characters.charAt(randomIndex);
+        /*const randomVowel = vowel.charAt(randomIndex);*/
 
         /* make sure to have a string with non-repeated characters */
         if (!usedChars.has(randomChar)) {
             result += randomChar;
             usedChars.add(randomChar);
         }
+        /*if ((result.length == (length - 1) && !usedChars.has(vowel)) && !usedChars.has(randomChar)) {
+            result += randomVowel;
+            usedChars.add(randomVowel);
+        }*/
+
     }
     return result;
 }
@@ -35,3 +45,6 @@ for (let i = 0; i < 7; i++) {
 function displayElement(i) {
     document.getElementById("display").innerHTML = document.getElementById(i).innerHTML;
 }
+
+
+

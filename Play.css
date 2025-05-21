@@ -14,6 +14,7 @@ p {
     display: grid;
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
     gap: 10px; /* create gaps between grids */
+    cursor: pointer;
 }
 
 .square > div {
@@ -26,6 +27,24 @@ p {
 /* make the 4th square in yellow */
 .square > div:nth-child(4) {
     background-color: #ffcc00;
+}
+
+
+.button {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    gap: 10px; /* create gaps between grids */
+    cursor: pointer;
+}
+
+.button > div {
+    background: white;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #777;
 }
 
 /*create hexagon shape*/
