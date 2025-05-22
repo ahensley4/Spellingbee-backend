@@ -2,7 +2,6 @@
 
 // function to generate random string
 function generateRandomString(length) {
-    console.log("random string will be generated");
     const vowel = 'AEIOU';
     const consonant = 'BCDFGHJKLMNPQRSTVWXYZ';
     const allChar = vowel + consonant;
@@ -45,22 +44,38 @@ for (let i = 0; i < 7; i++) {
 let guessWord = '';
 let inputActive = true;
 
-// function to output the element in the boxes
-function displayElement(i) {
-    console.log("character: " + document.getElementById(i).innerHTML + " was selected");
-    if (inputActive)  {
+// function to display current guess word
+function displayString() {
+    document.getElementById("currentString").innerHTML = guessWord;
+    console.log("Current string: " + guessWord);
+}
+
+// function to append character to guess word
+function addChar(i) {
+    console.log("selected character: " + document.getElementById(i).innerHTML);
+    if (inputActive) {
+        // keep appending characters until the enter button is clicked
         guessWord += document.getElementById(i).innerHTML;
-        document.getElementById("currentString").innerHTML = guessWord;    
+        displayString();
     }
 }
 
-// function to send the guessed word to API
-function enterButton() {
-    console.log("Enter button was pressed");
-    inputActive = false;
-    // sent the guessed word to REST
-    // code from lab6 can be reused 
+// function to delete last character
+function deleteButton() {
+    console.log("Delete button was pressed");
+    if (inputActive && guessWord.length > 1) {
+        guessWord = guessWord.slice(0, -1);
+        displayString();
+    }
 }
+
+//function to submit guess word
+function enterButton() {
+    inputActive = false;
+    console.log("Enter button was pressed");
+    //send guessed word to REST
+}
+
 
 // keyPressed() function
 /*document.addEventListener("keydown", function(event) {
