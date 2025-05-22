@@ -1,22 +1,27 @@
+/* play.css */
+
 body {
     margin: 100px;
 }
 
+/* output */
 p {
     text-align: center;
     font-size: 100px;
 }
 
+/* whole square class */
 .square {
     max-width: 700px;
     margin: 0 auto;
     margin-top: 300px;
     display: grid;
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
-    gap: 10px; /* create gaps between grids */
+    gap: 10px; 
     cursor: pointer;
 }
 
+/* each square class */
 .square > div {
     background: lightgrey;
     text-align: center;
@@ -29,17 +34,18 @@ p {
     background-color: #ffcc00;
 }
 
-
+/* whole button class: delete, refresh, and enter */
 .button {
     max-width: 300px;
     margin: 0 auto;
     margin-top: 50px;
     display: grid;
     grid-template-columns: 100px 100px 100px;
-    gap: 10px; /* create gaps between grids */
+    gap: 10px;
     cursor: pointer;
 }
 
+/* each button class */
 .button > div {
     background: white;
     text-align: center;
@@ -47,7 +53,7 @@ p {
     border: 1px solid #777;
 }
 
-/*create hexagon shape*/
+/* if we want to use hexagon instead of square*/
 /*body {
     height: 10vh;
     display: grid;
