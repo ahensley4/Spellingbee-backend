@@ -1,88 +1,151 @@
-#  Spelling Bee Backend
+# 🐝 Spelling Bee Backend (CS362 Group Project)
 
-This is the backend system for the 2025 CS362 Group Project — a spelling game where users guess words made from a fixed 7-letter set each day.
+This is the backend system for our Spelling Bee web app, built with Flask, MySQL, and RESTful APIs.
 
----
-
-##  Features
-- Daily unique 7-letter puzzles
-- Session-based gameplay and score tracking
-- Pangram detection and bonus scoring
-- Word validation using a local dictionary
-- Restart and replay features
+It handles:
+- User session creation
+- Word validation and scoring
+- Daily puzzle letter generation
+- Word list verification against a shared database
+- Rank calculation and pangram detection
 
 ---
 
-##  Requirements
-- Python 3.9+
+## 🚀 Getting Started
+
+Follow these instructions to clone the project, set up the MySQL database, and run the backend server.
+
+---
+
+## 🔧 Requirements
+
+- Python 3.11+
 - MySQL Server 8.0+
 - VS Code or any Python IDE
 
 ---
 
-##  Setup Instructions
+## 📦 Clone the Repository
 
-### 1. Clone the Repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/SpellingBee-Backend.git
+git clone https://github.com/yourusername/SpellingBee-Backend.git
 cd SpellingBee-Backend
 ```
 
-### 2. Create and activate a virtual environment
+---
+
+## 🐍 Set Up the Python Environment
+
 ```bash
 python -m venv venv
-venv\Scripts\activate     # On Windows
-source venv/bin/activate    # On Mac/Linux
-```
-
-### 3. Install dependencies
-```bash
+.env\Scriptsctivate
 pip install -r requirements.txt
 ```
 
-### 4. Set up your database
-- Start MySQL and create the database:
+---
+
+## 🛢️ Set Up the MySQL Database
+
+### 1. Create the `spelling_bee` database manually or using Workbench
+
 ```sql
 CREATE DATABASE spelling_bee;
 ```
 
-- Load the schema:
+### 2. Load the database schema
+
 ```bash
 mysql -u root -p spelling_bee < spelling_bee_final_backend_schema.sql
 ```
 
-### 5. Configure your database connection
-Copy `db.py.example` to `db.py` and update your MySQL credentials.
+### 3. Load the shared word list
 
-### 6. Load the word list
 ```bash
-python load_words.py
+mysql -u root -p spelling_bee < valid_words.sql
 ```
 
-### 7. Run the backend API
+---
+
+## 🗝️ Configure Your DB Connection
+
+Copy the template file and update credentials if needed:
+
+```bash
+cp db.py.example db.py
+```
+
+In `db.py`, fill in your MySQL password if required.
+
+---
+
+## 🧠 Run the Backend Server
+
 ```bash
 python api.py
 ```
 
-The API is goood at `http://localhost:8001`.
+The Flask server will start at:
+```
+http://localhost:8001
+```
 
 ---
 
-##  Testing
-Use Thunder to:
-- `/create_session`
-- `/check_word`
-- `/restart_session`
+## 🔬 API Endpoints Overview
+
+| Endpoint               | Method | Description                      |
+|------------------------|--------|----------------------------------|
+| `/create_session`      | GET    | Start a new game session         |
+| `/check_word`          | POST   | Validate a submitted word        |
+| `/restart_session`     | POST   | Reset guesses and score          |
+| `/daily_letters`       | GET    | View today’s puzzle letters      |
 
 ---
 
-##  Notes
-- All users get the same letter set each calendar day.
-- Scoring and rank follow project rules (Beginner → Genius).
+## 🧪 Testing the API
 
-### 5. Load the word list into the database
+Use [Thunder Client](https://www.thunderclient.com/) in VS Code or Postman.
 
-After setting up the `spelling_bee` database, run:
+You’ll need to:
+- Fetch `/create_session`
+- Use that `session_id` to POST to `/check_word`
+- Verify word responses and scoring
 
-```bash
-mysql -u root -p spelling_bee < valid_words.sql
+---
+
+## 🙋 Support
+
+If anything doesn't work, ping Aaron in the project Slack or check for terminal errors. Most problems come from:
+- Not activating the Python virtual environment
+- Forgetting to load the `valid_words.sql` dump
+- Typos in `db.py` configuration
+
+---
+
+## 👥 Contributors
+
+- Aaron Hensley – Backend Developer
+- [Teammates here]
+
+---
+
+## 🗂 Folder Structure
+
+```
+SpellingBee-Backend/
+├── api.py                    # Flask API endpoints
+├── db.py                     # MySQL connector
+├── db.py.example             # DB template for teammates
+├── valid_words.sql           # Word list dump (DO NOT DELETE)
+├── spelling_bee_final_backend_schema.sql # DB structure
+├── requirements.txt          # Python dependencies
+├── README.md                 # This file
+```
+
+---
+
+## ✅ To Do (Team)
+
+- [ ] Add frontend integration testing
+- [ ] Seed more daily letter sets
+- [ ] Deploy to Render or Replit for demo access
