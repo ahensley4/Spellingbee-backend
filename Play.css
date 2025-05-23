@@ -7,7 +7,8 @@ body {
 /* output */
 p {
     text-align: center;
-    font-size: 60px;
+    font-size: 40px;
+    margin-top: 150px;
 }
 
 /* whole square class */
@@ -70,10 +71,12 @@ p {
     padding: 8px 0;
     position: absolute;
     z-index: 1;
-    top: px;
     left: 300%;
-    margin-left: 310px; /* popup position */
-    
+    margin-top: 10px;
+    margin-left: 330px; /* popup position: center*/
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+    animation: fadeInOut 1s forwards;
 }
 
 /* Popup arrow */
@@ -92,20 +95,53 @@ p {
 /* Toggle this class when clicking on the popup container */
 .popup .show {
   visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s;
+  /*-webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;*/
+  animation: fadeInOut 1.5s;
+  animation-duration: 3s;
 }
 
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+
+
 /* fade in the popup */
-@-webkit-keyframes fadeIn {
+/*@-webkit-keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+@-webkit-keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
 }
 
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
 }
+
+@keyframes fadeOut {
+   0% {opacity: 1;}
+   100% {opacity: 0;} 
+}*/
 
 /* if we want to use hexagon instead of square*/
 /*body {

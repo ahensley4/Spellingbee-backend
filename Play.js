@@ -67,6 +67,7 @@ function deleteButton() {
         guessWord = guessWord.slice(0, -1);
         displayString();
     }
+    inputActive = true;
 }
 
 let readyToSubmit = false;
@@ -79,6 +80,9 @@ function enterButton() {
     if (readyToSubmit) {
         console.log("Send the word to the REST API to check");
     }
+    inputActive = true;
+    guessWord = guessWord.slice(0, 0);
+    displayString();
 }
 
 function wordCheck() {
@@ -102,20 +106,26 @@ function wordCheck() {
     return readyToSubmit;
 }
 
-// 
-function popupShort() {
-    var popup = document.getElementById("tooShort");
-    console.log("word is too short");
-    popup.classList.toggle("show");
+function retryButton() {
+    console.log("Retry button was pressed");
     guessWord = guessWord.slice(0, 0);
+    displayString();
+    inputActive = true;
+}
+
+// popups are acting weried so comment out for now */
+function popupShort() {
+    /*var popup = */document.getElementById("tooShort");
+    console.log("word is too short");
+    /*popup.classList.toggle("show");*/
 }
 
 function popupNoKey() {
-    var popup = document.getElementById("noKey");
+    /*const popup = */document.getElementById("noKey");
     console.log("key word is not used");
-    popup.classList.toggle("show");
-    guessWord = guessWord.slice(0, 0);
+    /*popup.classList.toggle("show");*/
 }
+
 
 
 
