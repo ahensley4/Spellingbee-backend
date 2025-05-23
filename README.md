@@ -79,3 +79,9 @@ Use Postman or the provided frontend to:
 ## 📝 Notes
 - All users get the same letter set each calendar day.
 - Scoring and rank follow project rules (Beginner → Genius).
+
+### 5. Load the word list into the database
+
+After setting up the `spelling_bee` database, run:
+
+mysql -u root -p spelling_bee < valid_words.sql
