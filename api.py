@@ -6,6 +6,7 @@ from datetime import date
 from db import get_connection
 import random
 import string
+from decimal import Decimal
 
 app = Flask(__name__)
 CORS(app)
@@ -131,13 +132,13 @@ class CheckWord(Resource):
         conn.close()
 
         return {
-            "valid": True,
-            "message": "Pangram!!" if is_pangram else "Valid word!",
-            "points_awarded": points,
-            "total_score": total_score,
-            "rank": rank,
-            "words_found": count
-        }
+    "valid": True,
+    "message": "Pangram!!" if is_pangram else "Valid word!",
+    "points_awarded": int(points) if isinstance(points, Decimal) else points,
+    "total_score": int(total_score) if isinstance(total_score, Decimal) else total_score,
+    "rank": rank,
+    "words_found": count
+}
 
 class RestartSession(Resource):
     def post(self):
