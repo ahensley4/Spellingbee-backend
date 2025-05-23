@@ -12,10 +12,16 @@
                 <input type = "submit" value="Back">
             </form>
         </div>
+        
+        <!-- popup message -->
+        <div class="popup">
+            <div class="popuptext" id="tooShort">too short</div>
+            <div class="popuptext" id="noKey">doesn't contain center letter</div>
+        </div>
 
-        <p id="display"><span id="currentString"></span></p> <!-- display output-->
+        <p id="display"><span id="currentString"></span></p>  <!--display output-->
 
-        <!-- create 7 square boxes -->
+        <!-- 7 square boxes -->
         <div class="square"> 
             <div class="square_item" id='0' onclick="addChar(0)"></div>
             <div class="square_item" id='1' onclick="addChar(1)"></div>
@@ -26,7 +32,7 @@
             <div class="square_item" id='6' onclick="addChar(6)"></div>
         </div>
 
-        <!-- create some interactive button -->
+        <!-- some interactive button -->
         <div class="button">
             <div class="button_item" id="delete" onclick="deleteButton()">Delete</div>
             <div class="button_item" id="refresh" onclick="refreshButton()">Refresh</div>
