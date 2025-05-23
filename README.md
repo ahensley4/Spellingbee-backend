@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🛢️ Set Up the MySQL Database
+## Set Up the MySQL Database
 
 ### 1. Create the `spelling_bee` database manually or using Workbench
 
