@@ -4,7 +4,7 @@ This is the backend system for the 2025 CS362 Group Project — a spelling game 
 
 ---
 
-## 🚀 Features
+##  Features
 - Daily unique 7-letter puzzles
 - Session-based gameplay and score tracking
 - Pangram detection and bonus scoring
@@ -13,14 +13,14 @@ This is the backend system for the 2025 CS362 Group Project — a spelling game 
 
 ---
 
-## 🔧 Requirements
+##  Requirements
 - Python 3.9+
 - MySQL Server 8.0+
 - VS Code or any Python IDE
 
 ---
 
-## 📦 Setup Instructions
+##  Setup Instructions
 
 ### 1. Clone the Repo
 ```bash
@@ -68,7 +68,7 @@ The API will be available at `http://localhost:8001`.
 
 ---
 
-## 🧪 Testing
+##  Testing
 Use Postman or the provided frontend to:
 - `/create_session`
 - `/check_word`
@@ -76,7 +76,7 @@ Use Postman or the provided frontend to:
 
 ---
 
-## 📝 Notes
+##  Notes
 - All users get the same letter set each calendar day.
 - Scoring and rank follow project rules (Beginner → Genius).
 
