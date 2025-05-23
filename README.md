@@ -1,162 +1,81 @@
-# 🐝 Spellingbee Backend
+# 🐝 Spelling Bee Backend
 
-This is the backend for a simple Spelling Bee game built with Flask and MySQL. It allows you to create sessions and check if a word is valid based on a preloaded word list.
-
----
-
-## 📁 Project Structure
-
-```
-SpellingBee-Backend/
-├── api.py               # Flask API routes
-├── db.py                # MySQL connection helper
-├── requirements.txt     # All necessary Python packages
-├── words.txt            # Full list of valid words
-├── .gitignore           # Excludes venv and other junk
-```
+This is the backend system for the 2025 CS362 Group Project — a spelling game where users guess words made from a fixed 7-letter set each day.
 
 ---
 
-## 💻 Setup Instructions (Windows + VS Code)
+## 🚀 Features
+- Daily unique 7-letter puzzles
+- Session-based gameplay and score tracking
+- Pangram detection and bonus scoring
+- Word validation using a local dictionary
+- Restart and replay features
 
-### 1. Clone the Repository
+---
 
-In your terminal:
+## 🔧 Requirements
+- Python 3.9+
+- MySQL Server 8.0+
+- VS Code or any Python IDE
 
+---
+
+## 📦 Setup Instructions
+
+### 1. Clone the Repo
 ```bash
-git clone https://github.com/ahensley4/Spellingbee-backend.git
-cd Spellingbee-backend
+git clone https://github.com/YOUR_USERNAME/SpellingBee-Backend.git
+cd SpellingBee-Backend
 ```
 
----
-
-### 2. Create a Virtual Environment
-
+### 2. Create and activate a virtual environment
 ```bash
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate     # On Windows
+source venv/bin/activate    # On Mac/Linux
 ```
 
----
-
-### 3. Install Python Dependencies
-
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### 4. Set Up MySQL Database
-
-1. **Log in to MySQL:**
-
-```bash
-mysql -u root -p
-```
-
-2. **Create the database:**
-
+### 4. Set up your database
+- Start MySQL and create the database:
 ```sql
 CREATE DATABASE spelling_bee;
-USE spelling_bee;
 ```
 
-3. **Create the tables:**
-
-```sql
-CREATE TABLE valid_words (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  word VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE game_sessions (
-  session_id VARCHAR(36) PRIMARY KEY,
-  start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-  points INT DEFAULT 0
-);
-
-CREATE TABLE guesses (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  session_id VARCHAR(36),
-  guessed_word VARCHAR(100),
-  is_valid BOOLEAN,
-  FOREIGN KEY (session_id) REFERENCES game_sessions(session_id)
-);
-```
-
-4. **Enable local file import:**
-
-```sql
-SET GLOBAL local_infile = 1;
-```
-
-5. **Load the word list:**
-
-Replace the path with the full file path on your machine:
-
-```sql
-LOAD DATA LOCAL INFILE 'C:\\Users\\<your_username>\\Desktop\\CS362\\SpellingBee-Backend\\words.txt'
-INTO TABLE valid_words
-LINES TERMINATED BY '\n'
-(word);
-```
-
----
-
-### 5. Run the Flask Backend
-
-Make sure your virtual environment is still active:
-
+- Load the schema:
 ```bash
-venv\Scripts\activate
+mysql -u root -p spelling_bee < spelling_bee_final_backend_schema.sql
+```
+
+### 5. Configure your database connection
+Copy `db.py.example` to `db.py` and update your MySQL credentials.
+
+### 6. Load the word list
+```bash
+python load_words.py
+```
+
+### 7. Run the backend API
+```bash
 python api.py
 ```
 
----
-
-### 6. Test with Thunder Client or Postman
-
-#### ✅ Create a session:
-
-```
-GET http://127.0.0.1:5000/create_session
-```
-
-#### ✅ Check a word:
-
-```
-POST http://127.0.0.1:5000/check_word
-Body (JSON):
-{
-  "session_id": "your-session-id",
-  "word": "apple"
-}
-```
+The API will be available at `http://localhost:8001`.
 
 ---
 
-## 🛠️ Tech Stack
+## 🧪 Testing
+Use Postman or the provided frontend to:
+- `/create_session`
+- `/check_word`
+- `/restart_session`
 
-- Python 3
-- Flask + Flask-RESTful
-- MySQL
-- Thunder Client or Postman (for testing API)
+---
 
-## 🗄️ Database Dump Files
-
-This project includes SQL table dumps for the backend MySQL database. To restore them, use the following commands in your MySQL terminal:
-
-```bash
-mysql -u root -p spelling_bee < spelling_bee_game_sessions.sql
-mysql -u root -p spelling_bee < spelling_bee_guesses.sql
-mysql -u root -p spelling_bee < spelling_bee_valid_words.sql
-```
-
-Be sure the `spelling_bee` database already exists before running the imports:
-
-```bash
-mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS spelling_bee;"
-```
-
-Then import the tables.
+## 📝 Notes
+- All users get the same letter set each calendar day.
+- Scoring and rank follow project rules (Beginner → Genius).
