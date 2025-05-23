@@ -1,4 +1,4 @@
-# 🐝 Spelling Bee Backend
+#  Spelling Bee Backend
 
 This is the backend system for the 2025 CS362 Group Project — a spelling game where users guess words made from a fixed 7-letter set each day.
 
@@ -64,12 +64,12 @@ python load_words.py
 python api.py
 ```
 
-The API will be available at `http://localhost:8001`.
+The API is goood at `http://localhost:8001`.
 
 ---
 
 ##  Testing
-Use Postman or the provided frontend to:
+Use Thunder to:
 - `/create_session`
 - `/check_word`
 - `/restart_session`
@@ -84,4 +84,5 @@ Use Postman or the provided frontend to:
 
 After setting up the `spelling_bee` database, run:
 
+```bash
 mysql -u root -p spelling_bee < valid_words.sql
