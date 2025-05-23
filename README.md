@@ -1,4 +1,4 @@
-# 🐝 Spelling Bee Backend (CS362 Group Project)
+# Spelling Bee Backend
 
 This is the backend system for our Spelling Bee web app, built with Flask, MySQL, and RESTful APIs.
 
@@ -11,13 +11,13 @@ It handles:
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 Follow these instructions to clone the project, set up the MySQL database, and run the backend server.
 
 ---
 
-## 🔧 Requirements
+##  Requirements
 
 - Python 3.11+
 - MySQL Server 8.0+
@@ -25,7 +25,7 @@ Follow these instructions to clone the project, set up the MySQL database, and r
 
 ---
 
-## 📦 Clone the Repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/SpellingBee-Backend.git
@@ -34,11 +34,11 @@ cd SpellingBee-Backend
 
 ---
 
-## 🐍 Set Up the Python Environment
+## Set Up the Python Environment
 
 ```bash
 python -m venv venv
-.env\Scriptsctivate
+.\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -66,7 +66,7 @@ mysql -u root -p spelling_bee < valid_words.sql
 
 ---
 
-## 🗝️ Configure Your DB Connection
+## Configure Your DB Connection
 
 Copy the template file and update credentials if needed:
 
@@ -78,7 +78,7 @@ In `db.py`, fill in your MySQL password if required.
 
 ---
 
-## 🧠 Run the Backend Server
+## Run the Backend Server
 
 ```bash
 python api.py
@@ -91,7 +91,7 @@ http://localhost:8001
 
 ---
 
-## 🔬 API Endpoints Overview
+## API Endpoints Overview
 
 | Endpoint               | Method | Description                      |
 |------------------------|--------|----------------------------------|
@@ -102,7 +102,7 @@ http://localhost:8001
 
 ---
 
-## 🧪 Testing the API
+## Testing the API
 
 Use [Thunder Client](https://www.thunderclient.com/) in VS Code or Postman.
 
@@ -113,39 +113,9 @@ You’ll need to:
 
 ---
 
-## 🙋 Support
+## Support
 
-If anything doesn't work, ping Aaron in the project Slack or check for terminal errors. Most problems come from:
+If anything doesn't work, ping Aaron in Discord or check for terminal errors. Most problems come from:
 - Not activating the Python virtual environment
 - Forgetting to load the `valid_words.sql` dump
 - Typos in `db.py` configuration
-
----
-
-## 👥 Contributors
-
-- Aaron Hensley – Backend Developer
-- [Teammates here]
-
----
-
-## 🗂 Folder Structure
-
-```
-SpellingBee-Backend/
-├── api.py                    # Flask API endpoints
-├── db.py                     # MySQL connector
-├── db.py.example             # DB template for teammates
-├── valid_words.sql           # Word list dump (DO NOT DELETE)
-├── spelling_bee_final_backend_schema.sql # DB structure
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
-```
-
----
-
-## ✅ To Do (Team)
-
-- [ ] Add frontend integration testing
-- [ ] Seed more daily letter sets
-- [ ] Deploy to Render or Replit for demo access
