@@ -53,95 +53,27 @@ p {
     border: 1px solid #777;
 }
 
-/* Popup container */
-.popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-/* actual popup */
+/* Popup base style */
 .popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    left: 300%;
-    margin-top: 10px;
-    margin-left: 330px; /* popup position: center*/
-    transform: translate(-50%, -50%);
-    opacity: 0; 
-    animation: fadeInOut 1s forwards;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: fixed;
+  /*bottom: 30px;*/
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 1000;
 }
 
-/* Popup arrow */
-.popup .popuptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  /*left: 50%;*/
-  left: 300%;
-  margin-left: -410px; /* arrow position */
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-/* Toggle this class when clicking on the popup container */
+/* Visible state */
 .popup .show {
-  visibility: visible;
-  /*-webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s;*/
-  animation: fadeInOut 1.5s;
-  animation-duration: 3s;
+  opacity: 1;
 }
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  80% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-}
-
-
-
-/* fade in the popup */
-/*@-webkit-keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-@-webkit-keyframes fadeOut {
-  from {opacity: 1;}
-  to {opacity: 0;}
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-@keyframes fadeOut {
-   0% {opacity: 1;}
-   100% {opacity: 0;} 
-}*/
 
 /* if we want to use hexagon instead of square*/
 /*body {

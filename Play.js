@@ -42,7 +42,6 @@ for (let i = 0; i < 7; i++) {
 }
 
 let guessWord = "";
-let inputActive = true;
 
 // function to display current guess word
 function displayString() {
@@ -67,10 +66,10 @@ function deleteButton() {
         guessWord = guessWord.slice(0, -1);
         displayString();
     }
-    inputActive = true;
 }
 
 let readyToSubmit = false;
+let inputActive = true;
 
 //function to submit guess word
 function enterButton() {
@@ -89,18 +88,20 @@ function wordCheck() {
      console.log("Minimum Requirement Check");
     // if word doesn’t contain at least 4 letters
     if (guessWord.length < 4) {
-        // popup message
+        // popup message: too short
         popupShort(); 
     }
-    // if the key word is not used
+    // if word is more than 4 letters
     else
     {
+        // check if the guessed word contains key word
         for (let i = 0; i < guessWord.length; i++) {
+            // return true only when the guessed word contains key word
             if ((guessWord[i]) == document.getElementById(3).innerHTML) { 
                 return true;
             }
         }
-        // popup message
+        // popup message: no key word
         popupNoKey();
     }
     return readyToSubmit;
@@ -110,20 +111,26 @@ function retryButton() {
     console.log("Retry button was pressed");
     guessWord = guessWord.slice(0, 0);
     displayString();
-    inputActive = true;
 }
 
-// popups are acting weried so comment out for now */
+// function to popup: tooshort
 function popupShort() {
-    /*var popup = */document.getElementById("tooShort");
+    var popup = document.getElementById("tooShort");
     console.log("word is too short");
-    /*popup.classList.toggle("show");*/
+    popup.classList.add("show"); 
+    // set up timer to fade out the popup in 2sec
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 1500);
 }
 
 function popupNoKey() {
-    /*const popup = */document.getElementById("noKey");
+    const popup = document.getElementById("noKey");
     console.log("key word is not used");
-    /*popup.classList.toggle("show");*/
+    popup.classList.toggle("show");
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 1500);
 }
 
 
