@@ -127,29 +127,54 @@ function popupShort() {
 function popupNoKey() {
     const popup = document.getElementById("noKey");
     console.log("key word is not used");
-    popup.classList.toggle("show");
+    popup.classList.add("show");
     setTimeout(() => {
       popup.classList.remove("show");
     }, 1500);
 }
 
+document.onkeydown = keyPressed;
 
+let inValidKey = true;
 
-
-
-/*document.onkeydown = keyPressed();
-// from lab5
-// declares global variable first and assigns it true
-var first = true;
-
-// keyPressed() function
-function keyPressed(e) {
-    if (e.code == "Enter") {
-        enterKey();
+function keyPressed(event) {
+    inValidKey = false;
+    const char = event.code.slice(3,4);
+    const key = event.key;
+    if (event.code == 'Enter') {
+        console.log("user pressed code: " + event.code);
+        enterButton();
+    }
+    else if (event.code == 'Backspace') {
+        console.log("user pressed code: " + event.code);
+        deleteButton();
+    }
+    else if (/^[a-zA-Z]$/.test(key)) {
+        console.log("pressed character: " + char);
+        for (let i = 0; i < 7; i++) {
+            if (char == document.getElementById(i).innerHTML) {
+                inValidKey = true;
+                guessWord += document.getElementById(i).innerHTML;
+                displayString();
+                //inValidKey = true;
+                console.log("Status check: " + inValidKey);
+                return;
+            } 
+        } 
+    }
+    else {
+        console.log("Status check: " + inValidKey);
+        displayString();
     }
 }
 
-function enterKey() {
-    console.log("Enter key was pressed");
-    //send guessed word to REST
+/*function popupBadLetter() {
+    if (!inValidKey) {
+        const popup = document.getElementById("badLetter");
+        console.log("badLetter");
+        popup.classList.add("show");
+        setTimeout(() => {
+            popup.classList.remove("show");
+        }, 1500);
+    }
 }*/
