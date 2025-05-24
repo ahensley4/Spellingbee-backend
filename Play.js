@@ -78,6 +78,8 @@ function enterButton() {
     readyToSubmit = wordCheck();
     if (readyToSubmit) {
         console.log("Send the word to the REST API to check");
+        //popup message if not a valid word 
+        //popupInvalid()
     }
     inputActive = true;
     guessWord = guessWord.slice(0, 0);
@@ -156,7 +158,6 @@ function keyPressed(event) {
                 inValidKey = true;
                 guessWord += document.getElementById(i).innerHTML;
                 displayString();
-                //inValidKey = true;
                 console.log("Status check: " + inValidKey);
                 return;
             } 
@@ -166,6 +167,15 @@ function keyPressed(event) {
         console.log("Status check: " + inValidKey);
         displayString();
     }
+}
+
+function popupInvalid() {
+    const popup = document.getElementById("invalid");
+    console.log("word is invalid");
+    popup.classList.add("show");
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 1500);
 }
 
 /*function popupBadLetter() {
@@ -178,3 +188,26 @@ function keyPressed(event) {
         }, 1500);
     }
 }*/
+
+function sendAPI() {
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("GET", "http://localhost:8001/check_word"); 
+
+    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
+    // define a callback function
+    xmlhttp.onload = function () {
+        console.log("response received back from a server");
+        //
+        const resObj = JSON.parse(this.responseText);
+        console.log("response stuff was:", resObj['myStuff']);
+        stuff = resObj['myStuff']
+        var elem = document.getElementById("");
+        elem.innerHTML = stuff;
+    }
+    // send a request to a server
+    xmlhttp.send();
+    console.log("send completed");
+}
