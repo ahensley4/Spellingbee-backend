@@ -169,9 +169,9 @@ function keyPressed(event) {
     }
 }
 
-function popupInvalid() {
-    const popup = document.getElementById("invalid");
-    console.log("word is invalid");
+function popupMessage() {
+    const popup = document.getElementById("fromServer");
+    console.log("message: " );
     popup.classList.add("show");
     setTimeout(() => {
       popup.classList.remove("show");
@@ -189,7 +189,66 @@ function popupInvalid() {
     }
 }*/
 
-function sendAPI() {
+function restart() {
+    var txt;
+    if (confirm("Are you sure to reset your score to 0?")) {
+        txt = "OK";
+  } else {
+    txt = "Cancel";
+  }
+  document.getElementById("restart").innerHTML = txt;
+}
+
+// send a request to a server for daily letters
+function requestDailyLetters() {
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("GET", "http://localhost:8001/daily_letters"); 
+    xmlhttp.responseType = 'json';
+    // define a callback function
+    xmlhttp.onload = function () {
+        console.log("response received back from a server");
+        console.log(xmlhttp.response);
+        //document.getElementById("id-name").innerHTML = this.responseText;
+        /*const resObj = JSON.parse(this.responseText);
+        console.log("response: ", resObj['myStuff']);
+        stuff = resObj['myStuff']
+        var elem = document.getElementById("");
+        elem.innerHTML = stuff;*/
+    }
+    // send a request to a server
+    xmlhttp.send();
+    console.log("send a request to a server");
+}
+
+// send a request to a server for creating session
+function requestCreateSession() {
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("GET", "http://localhost:8001/create_session"); 
+
+    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
+    // define a callback function
+    xmlhttp.onload = function () {
+        console.log("response received back from a server");
+        //document.getElementById("id-name").innerHTML = this.responseText;
+        /*const resObj = JSON.parse(this.responseText);
+        console.log("response: ", resObj['myStuff']);
+        stuff = resObj['myStuff']
+        var elem = document.getElementById("");
+        elem.innerHTML = stuff;*/
+    }
+    // send a request to a server
+    xmlhttp.send();
+    console.log("send a request to a server");
+}
+
+// send a request to a server for word check (and rank?)
+function requestWordCheck() {
     console.log("send to REST");
     // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -200,14 +259,38 @@ function sendAPI() {
     // define a callback function
     xmlhttp.onload = function () {
         console.log("response received back from a server");
-        //
-        const resObj = JSON.parse(this.responseText);
-        console.log("response stuff was:", resObj['myStuff']);
+        //document.getElementById("id-name").innerHTML = this.responseText;
+        /*const resObj = JSON.parse(this.responseText);
+        console.log("response: ", resObj['myStuff']);
         stuff = resObj['myStuff']
         var elem = document.getElementById("");
-        elem.innerHTML = stuff;
+        elem.innerHTML = stuff;*/
     }
     // send a request to a server
     xmlhttp.send();
-    console.log("send completed");
+    console.log("send a request to a server");
+}
+
+// send a request to a server for word check (and rank?)
+function requestRestartSession() {
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("GET", "http://localhost:8001/restart_session"); 
+
+    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
+    // define a callback function
+    xmlhttp.onload = function () {
+        console.log("response received back from a server");
+        //document.getElementById("id-name").innerHTML = this.responseText;
+        /*const resObj = JSON.parse(this.responseText);
+        console.log("response: ", resObj['myStuff']);
+        stuff = resObj['myStuff']
+        var elem = document.getElementById("");
+        elem.innerHTML = stuff;*/
+    }
+    // send a request to a server
+    xmlhttp.send();
+    console.log("send a request to a server");
 }

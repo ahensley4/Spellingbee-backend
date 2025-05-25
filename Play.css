@@ -1,14 +1,29 @@
 /* play.css */
 
-body {
+/*body {
     margin: 100px;
-}
+}*/
+
+/*body {*/
+  /*margin: 100px;*/
+  /*padding: 0;*/
+  /*position: relative;*/
+  /*height: 100vh;*/
+/*}*/
 
 /* output */
 p {
     text-align: center;
     font-size: 40px;
-    margin-top: 150px;
+    margin-top: 200px;
+}
+
+.rank {
+    position: absolute;
+    top: 30px;
+    right: 500px;
+    font-size: 25px; 
+    font-weight: bold;
 }
 
 /* whole square class */
@@ -16,9 +31,11 @@ p {
     max-width: 700px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px; 
     gap: 10px; 
     cursor: pointer;
+    font-weight: bold; /* text in the box */
+    font-size: 30px;
 }
 
 /* each square class */
@@ -55,25 +72,70 @@ p {
 
 /* Popup base style */
 .popup .popuptext {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position: fixed;
-  /*bottom: 30px;*/
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: white;
-  padding: 15px 25px;
-  border-radius: 5px;
-  pointer-events: none;
-  z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: fixed;
+    /*bottom: 30px;*/
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
 }
 
 /* Visible state */
 .popup .show {
-  opacity: 1;
+    opacity: 1;
 }
+
+/* whole circle: display scores */
+.circle {
+    position: absolute;
+    top: 30px;
+    right: 130px;
+    display: flex;
+    gap: 50px; 
+}
+
+/* each circle */
+.circle > div {
+    width: 30px;
+    height: 30px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    font-size: 20px;
+    text-align:center;
+}
+
+.alert {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+    left: 50%;
+    top: 65%;
+    position: absolute;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+  
+
+    
+
+
 
 /* if we want to use hexagon instead of square*/
 /*body {
