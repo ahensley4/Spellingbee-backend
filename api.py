@@ -46,7 +46,13 @@ class DailyLetters(Resource):
         result = cursor.fetchone()
 
         if not result:
-            letters = random.sample(string.ascii_lowercase, 7)
+            vowels = [ch for ch in "aeiou"]
+            consonants = [ch for ch in string.ascii_lowercase if ch not in vowels and ch != "y"]
+
+            letters = random.sample(consonants, 6)  # 6 consonants
+            letters.append(random.choice(vowels))  # 1 vowel
+            random.shuffle(letters)  # shuffle so vowel isn't always last
+
             center_letter = random.choice(letters)
             cursor.execute("INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
                            (today, ''.join(letters), center_letter))
