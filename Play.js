@@ -199,6 +199,47 @@ function restart() {
   document.getElementById("restart").innerHTML = txt;
 }
 
+// create XMLHttpRequest object "xmlhttp" to request data from a web server
+/*const xmlhttp = new XMLHttpRequest();
+// open the XMLHttpRequest object
+xmlhttp.open("GET", "http://127.0.0.1:8001/create_session");*/
+
+/*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
+// define a callback function
+/*xmlhttp.onload = function () {
+    console.log("response back from a server");
+    // convert JSON response
+    const response = JSON.parse(xmlhttp.responseText);
+    console.log("Session ID: " + response.session_id);
+    // stores session id
+    localStorage.setItem("session_id", response.session_id);
+}
+
+// send a request to a server
+xmlhttp.send();
+console.log("send a request to a server");*/
+
+// Start or resume session
+let sessionId = localStorage.getItem("session_id");
+
+// start new session
+if (!sessionId) {
+    fetch("http://127.0.0.1:8001/create_session")
+    .then(res => res.json())
+    .then(data => {
+        sessionId = data.session_id;
+        // store data within user's browser: data available after browser is closed and reopened
+        localStorage.setItem("session_id", sessionId);
+        localStorage.setItem("letters", data.letters);
+        localStorage.setItem("center_letter", data.center_letter);
+        console.log("New session:", sessionId);
+    })
+    .catch(err => console.error("Error creating session", err));
+    // resume session
+    } else {
+        console.log("Resuming session:", sessionId);
+}
+
 // send a request to a server for daily letters
 function requestDailyLetters() {
     console.log("send to REST");
@@ -211,30 +252,6 @@ function requestDailyLetters() {
     xmlhttp.onload = function () {
         console.log("response received back from a server");
         console.log(xmlhttp.response);
-        //document.getElementById("id-name").innerHTML = this.responseText;
-        /*const resObj = JSON.parse(this.responseText);
-        console.log("response: ", resObj['myStuff']);
-        stuff = resObj['myStuff']
-        var elem = document.getElementById("");
-        elem.innerHTML = stuff;*/
-    }
-    // send a request to a server
-    xmlhttp.send();
-    console.log("send a request to a server");
-}
-
-// send a request to a server for creating session
-function requestCreateSession() {
-    console.log("send to REST");
-    // create XMLHttpRequest object "xmlhttp" to request data from a web server
-    const xmlhttp = new XMLHttpRequest();
-    // open the XMLHttpRequest object
-    xmlhttp.open("GET", "http://localhost:8001/create_session"); 
-
-    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
-    // define a callback function
-    xmlhttp.onload = function () {
-        console.log("response received back from a server");
         //document.getElementById("id-name").innerHTML = this.responseText;
         /*const resObj = JSON.parse(this.responseText);
         console.log("response: ", resObj['myStuff']);
