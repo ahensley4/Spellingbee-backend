@@ -4,6 +4,8 @@
 let sessionId = localStorage.getItem("session_id");
 let letters = localStorage.getItem("letters");
 let centerLetter = localStorage.getItem("center_letter");
+//let letters = "";
+//let centerLetter = "";
 
 // start new session
 if (!sessionId) {
@@ -16,8 +18,8 @@ if (!sessionId) {
         centerLetter = data.center_letter;
         // store data within user's browser: data available after browser is closed and reopened
         localStorage.setItem("session_id", sessionId);
-        localStorage.setItem("letters", letters);   
-        localStorage.setItem("center_letter", centerLetter);
+        //localStorage.setItem("letters", letters);   
+        //localStorage.setItem("center_letter", centerLetter);
         console.log("New session:", sessionId);
         console.log("Daily letters:", letters);
         console.log("Center letter:", centerLetter);
@@ -39,8 +41,8 @@ for (let i = 0; i < length; i++) {
     elem.innerHTML = letters.slice(i, i+1);
 }
 
-/*let length = letters.length;
-console.log("Letters' length: ", length);
+
+/*console.log("Letters' length: ", length);
 let elem = "";
 let index = 0;
 let indexLetter = "";
