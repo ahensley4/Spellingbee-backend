@@ -31,23 +31,52 @@ if (!sessionId) {
 }
 
 let length = letters.length;
+for (let i = 0; i < length; i++) { 
+    console.log("Random character: " + letters[i]);
+    // retreive the element with id i
+    var elem = document.getElementById(i);
+    // display the element with id i
+    elem.innerHTML = letters.slice(i, i+1);
+}
+
+/*let length = letters.length;
 console.log("Letters' length: ", length);
 let elem = "";
 let index = 0;
+let indexLetter = "";
 for (let i = 0; i < length; i++) {
     console.log("Random character: " + letters[i]);
     console.log("center letter: ", centerLetter);
     // retreive the element with id i
-    elem = document.getElementById(i);
-    if (i == 3) {
-
+    //elem = document.getElementById(i);
+    if (letters[i] == centerLetter) {
+        index = i;
+        console.log("What is index: ", index);
+        indexLetter = letters[i];
+        console.log("What is index letter: ", indexLetter);
     }
-    else {
-        elem.innerHTML = letters.slice(i, i+1);
-    }
-    
 }
 
+for (let i = 0; i < length; i++) {
+    if (i == 3) {
+        // retreive the element with id i
+        elem = document.getElementById(index);
+        // display the element with id i
+        elem.innerHTML = letters.slice(index, index+1);
+    }
+    else if (i == index) {
+        elem = document.getElementById(3);
+        // display the element with id i
+        elem.innerHTML = letters.slice(3, 3+1);
+    }
+    else {
+        // retreive the element with id i
+        elem = document.getElementById(i);
+        // display the element with id i
+        elem.innerHTML = letters.slice(i, i+1);
+    }
+}*/
+    
     /*if (document.getElementById(i) == centerLetter) {
         index = i;
 elem = document.getElementById(i);
@@ -159,7 +188,7 @@ console.log("send a request to a server");*/
         [resultArray[i], resultArray[j]] = [resultArray[j], resultArray[i]];
     }
     return resultArray.join('');
-}
+}*/
 
 let guessWord = "";
 
