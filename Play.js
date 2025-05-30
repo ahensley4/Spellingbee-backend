@@ -1,7 +1,138 @@
 // Play.js file
 
+// Start or resume session
+let sessionId = localStorage.getItem("session_id");
+let letters = localStorage.getItem("letters");
+let centerLetter = localStorage.getItem("center_letter");
+
+// start new session
+if (!sessionId) {
+    fetch("http://127.0.0.1:8001/create_session")
+    // convert to JSON string
+    .then(res => res.json())
+    .then(data => {
+        sessionId = data.session_id;
+        letters = data.letters;
+        centerLetter = data.center_letter;
+        // store data within user's browser: data available after browser is closed and reopened
+        localStorage.setItem("session_id", sessionId);
+        localStorage.setItem("letters", letters);
+        localStorage.setItem("center_letter", centerLetter);
+        console.log("New session:", sessionId);
+        console.log("Daily letters:", letters);
+        console.log("Center letter:", centerLetter);
+    })
+    .catch(err => console.error("Error creating session", err));
+    // resume session
+    } else {
+        console.log("Resuming session:", sessionId);
+        console.log("Daily letters:", letters);
+        console.log("Center letter:", centerLetter);
+}
+
+let length = letters.length;
+console.log("Letters' length: ", length);
+let elem = "";
+let index = 0;
+for (let i = 0; i < length; i++) {
+    console.log("Random character: " + letters[i]);
+    console.log("center letter: ", centerLetter);
+    // retreive the element with id i
+    elem = document.getElementById(i);
+    if (i == 3) {
+
+    }
+    else {
+        elem.innerHTML = letters.slice(i, i+1);
+    }
+    
+}
+
+    /*if (document.getElementById(i) == centerLetter) {
+        index = i;
+elem = document.getElementById(i);
+if (document.getElementById(3) != centerLetter) {
+    document.getElementById(index) = document.getElementById(3);
+    document.getElementById(3) = centerLetter;
+}
+
+for (let i = 0; i < length; i++) {
+    // display the element with id i
+    
+}*/
+
+
+// call generateRandomString function
+/*const randomString = generateRandomString(7); 
+console.log("Random string: " + randomString);
+for (let i = 0; i < 7; i++) {
+    console.log("Random character: " + randomString[i]);
+    // retreive the element with id i
+    var elem = document.getElementById(i);
+    // display the element with id i
+    elem.innerHTML = randomString.slice(i, i+1);
+}*/
+
+
+
+
+
+// Start or resume session
+/*let sessionId = localStorage.getItem("session_id");
+let letters = localStorage.getItem("letters");
+let centerLetter = localStorage.getItem("center_letter");
+
+// create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+// start new session
+if (!sessionId) {
+    // open the XMLHttpRequest object
+    xmlhttp.open("GET", "http://127.0.0.1:8001/create_session");
+
+    // define a callback function
+    xmlhttp.onload = function () {
+    console.log("response back from a server");
+    // convert JSON response
+    const response = JSON.parse(xmlhttp.responseText);
+    console.log("Session ID: " + response.session_id);
+    console.log("Daily Letters: " + response.letters);
+    console.log("Center Letter: " + response.center_letter);
+    // stores session id
+    localStorage.setItem("session_id", response.session_id);
+    xmlhttp.catch(err => console.error("Error creating session", err));
+    }
+// send a request to a server
+xmlhttp.send();
+console.log("send a request to a server");
+}
+else {
+    console.log("Resuming session:", sessionId);
+    console.log("Daily letters:", letters);
+    console.log("Center letter:", centerLetter);
+}*/
+
+// create XMLHttpRequest object "xmlhttp" to request data from a web server
+/*const xmlhttp = new XMLHttpRequest();
+// open the XMLHttpRequest object
+xmlhttp.open("GET", "http://127.0.0.1:8001/create_session");
+
+// xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+// define a callback function
+xmlhttp.onload = function () {
+    console.log("response back from a server");
+    // convert JSON response
+    const response = JSON.parse(xmlhttp.responseText);
+    console.log("Session ID: " + response.session_id);
+    // stores session id
+    localStorage.setItem("session_id", response.session_id);
+}
+
+// send a request to a server
+xmlhttp.send();
+console.log("send a request to a server");*/
+
 // function to generate random string
-function generateRandomString(length) {
+/*function generateRandomString(length) {
     const vowel = 'AEIOU';
     const consonant = 'BCDFGHJKLMNPQRSTVWXYZ';
     const allChar = vowel + consonant;
@@ -28,17 +159,6 @@ function generateRandomString(length) {
         [resultArray[i], resultArray[j]] = [resultArray[j], resultArray[i]];
     }
     return resultArray.join('');
-}
-
-// call generateRandomString function
-const randomString = generateRandomString(7); 
-console.log("Random string: " + randomString);
-for (let i = 0; i < 7; i++) {
-    console.log("Random character: " + randomString[i]);
-    // retreive the element with id i
-    var elem = document.getElementById(i);
-    // display the element with id i
-    elem.innerHTML = randomString.slice(i, i+1);
 }
 
 let guessWord = "";
@@ -199,46 +319,6 @@ function restart() {
   document.getElementById("restart").innerHTML = txt;
 }
 
-// create XMLHttpRequest object "xmlhttp" to request data from a web server
-/*const xmlhttp = new XMLHttpRequest();
-// open the XMLHttpRequest object
-xmlhttp.open("GET", "http://127.0.0.1:8001/create_session");*/
-
-/*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
-// define a callback function
-/*xmlhttp.onload = function () {
-    console.log("response back from a server");
-    // convert JSON response
-    const response = JSON.parse(xmlhttp.responseText);
-    console.log("Session ID: " + response.session_id);
-    // stores session id
-    localStorage.setItem("session_id", response.session_id);
-}
-
-// send a request to a server
-xmlhttp.send();
-console.log("send a request to a server");*/
-
-// Start or resume session
-let sessionId = localStorage.getItem("session_id");
-
-// start new session
-if (!sessionId) {
-    fetch("http://127.0.0.1:8001/create_session")
-    .then(res => res.json())
-    .then(data => {
-        sessionId = data.session_id;
-        // store data within user's browser: data available after browser is closed and reopened
-        localStorage.setItem("session_id", sessionId);
-        localStorage.setItem("letters", data.letters);
-        localStorage.setItem("center_letter", data.center_letter);
-        console.log("New session:", sessionId);
-    })
-    .catch(err => console.error("Error creating session", err));
-    // resume session
-    } else {
-        console.log("Resuming session:", sessionId);
-}
 
 // send a request to a server for daily letters
 function requestDailyLetters() {
