@@ -16,7 +16,7 @@ if (!sessionId) {
         centerLetter = data.center_letter;
         // store data within user's browser: data available after browser is closed and reopened
         localStorage.setItem("session_id", sessionId);
-        localStorage.setItem("letters", letters);
+        localStorage.setItem("letters", letters);   
         localStorage.setItem("center_letter", centerLetter);
         console.log("New session:", sessionId);
         console.log("Daily letters:", letters);
@@ -90,7 +90,6 @@ for (let i = 0; i < length; i++) {
     
 }*/
 
-
 // call generateRandomString function
 /*const randomString = generateRandomString(7); 
 console.log("Random string: " + randomString);
@@ -101,10 +100,6 @@ for (let i = 0; i < 7; i++) {
     // display the element with id i
     elem.innerHTML = randomString.slice(i, i+1);
 }*/
-
-
-
-
 
 // Start or resume session
 /*let sessionId = localStorage.getItem("session_id");
@@ -227,8 +222,25 @@ function enterButton() {
     readyToSubmit = wordCheck();
     if (readyToSubmit) {
         console.log("Send the word to the REST API to check");
+        //requestWordCheck();
         //popup message if not a valid word 
         //popupInvalid()
+
+fetch("http://127.0.0.1:8001/check_word", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    guessWord,
+    session_id: sessionId,
+    all_letters: letters,
+    center_letter: centerLetter 
+  })
+})
+  .then(res => res.json())
+  .then(data => {
+    console.log("Check result:", data);
+  });
+
     }
     inputActive = true;
     guessWord = guessWord.slice(0, 0);
@@ -258,7 +270,9 @@ function wordCheck() {
     return readyToSubmit;
 }
 
-function retryButton() {
+
+
+function clearButton() {
     console.log("Retry button was pressed");
     guessWord = guessWord.slice(0, 0);
     displayString();
@@ -327,6 +341,37 @@ function popupMessage() {
     }, 1500);
 }
 
+// send a request to a server for word check (and rank?)
+/*function requestWordCheck() {
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("POST", "http://localhost:8001/check_word"); 
+
+    //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    // define a callback function
+    xmlhttp.onload = function () {
+        console.log("response received back from a server");
+        JSON.stringify({
+            word,
+            session_id: sessionId,
+            all_letters: letters,
+            center_letter: centerLetter 
+        })
+    
+  .then(res => res.json())
+  .then(data => {
+    console.log("Check result:", data);
+  });
+    }
+    // send a request to a server
+    xmlhttp.send();
+    console.log("send a request to a server");
+}*/
+
+
 /*function popupBadLetter() {
     if (!inValidKey) {
         const popup = document.getElementById("badLetter");
@@ -339,73 +384,34 @@ function popupMessage() {
 }*/
 
 function restart() {
-    var txt;
+    var txt = "";
     if (confirm("Are you sure to reset your score to 0?")) {
         txt = "OK";
-  } else {
+        fetch("http://127.0.0.1:8001/restart_session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId })
+    })
+    .then(res => res.json())
+    .then(data => {
+    console.log("Game restarted:", data.message);
+    guessWord = guessWord.slice(0, 0);
+    displayString();
+});
+    } else {
     txt = "Cancel";
-  }
-  document.getElementById("restart").innerHTML = txt;
-}
-
-
-// send a request to a server for daily letters
-function requestDailyLetters() {
-    console.log("send to REST");
-    // create XMLHttpRequest object "xmlhttp" to request data from a web server
-    const xmlhttp = new XMLHttpRequest();
-    // open the XMLHttpRequest object
-    xmlhttp.open("GET", "http://localhost:8001/daily_letters"); 
-    xmlhttp.responseType = 'json';
-    // define a callback function
-    xmlhttp.onload = function () {
-        console.log("response received back from a server");
-        console.log(xmlhttp.response);
-        //document.getElementById("id-name").innerHTML = this.responseText;
-        /*const resObj = JSON.parse(this.responseText);
-        console.log("response: ", resObj['myStuff']);
-        stuff = resObj['myStuff']
-        var elem = document.getElementById("");
-        elem.innerHTML = stuff;*/
     }
-    // send a request to a server
-    xmlhttp.send();
-    console.log("send a request to a server");
 }
 
 // send a request to a server for word check (and rank?)
-function requestWordCheck() {
-    console.log("send to REST");
-    // create XMLHttpRequest object "xmlhttp" to request data from a web server
-    const xmlhttp = new XMLHttpRequest();
-    // open the XMLHttpRequest object
-    xmlhttp.open("GET", "http://localhost:8001/check_word"); 
-
-    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
-    // define a callback function
-    xmlhttp.onload = function () {
-        console.log("response received back from a server");
-        //document.getElementById("id-name").innerHTML = this.responseText;
-        /*const resObj = JSON.parse(this.responseText);
-        console.log("response: ", resObj['myStuff']);
-        stuff = resObj['myStuff']
-        var elem = document.getElementById("");
-        elem.innerHTML = stuff;*/
-    }
-    // send a request to a server
-    xmlhttp.send();
-    console.log("send a request to a server");
-}
-
-// send a request to a server for word check (and rank?)
-function requestRestartSession() {
+/*function requestRestartSession() {
     console.log("send to REST");
     // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
     // open the XMLHttpRequest object
     xmlhttp.open("GET", "http://localhost:8001/restart_session"); 
 
-    /*xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");*/
+    //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     // define a callback function
     xmlhttp.onload = function () {
         console.log("response received back from a server");
@@ -415,8 +421,8 @@ function requestRestartSession() {
         stuff = resObj['myStuff']
         var elem = document.getElementById("");
         elem.innerHTML = stuff;*/
-    }
+    /*}
     // send a request to a server
     xmlhttp.send();
     console.log("send a request to a server");
-}
+}*/
