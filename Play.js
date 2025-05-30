@@ -18,8 +18,8 @@ if (!sessionId) {
         centerLetter = data.center_letter;
         // store data within user's browser: data available after browser is closed and reopened
         localStorage.setItem("session_id", sessionId);
-        //localStorage.setItem("letters", letters);   
-        //localStorage.setItem("center_letter", centerLetter);
+        localStorage.setItem("letters", letters);   
+        localStorage.setItem("center_letter", centerLetter);
         console.log("New session:", sessionId);
         console.log("Daily letters:", letters);
         console.log("Center letter:", centerLetter);
@@ -33,29 +33,27 @@ if (!sessionId) {
 }
 
 let length = letters.length;
-for (let i = 0; i < length; i++) { 
+/*for (let i = 0; i < length; i++) { 
     console.log("Random character: " + letters[i]);
     // retreive the element with id i
     var elem = document.getElementById(i);
     // display the element with id i
     elem.innerHTML = letters.slice(i, i+1);
-}
+}*/
 
-
-/*console.log("Letters' length: ", length);
+console.log("Letters' length: ", length);
 let elem = "";
 let index = 0;
 let indexLetter = "";
+console.log("Center letter: ", centerLetter);
 for (let i = 0; i < length; i++) {
-    console.log("Random character: " + letters[i]);
-    console.log("center letter: ", centerLetter);
-    // retreive the element with id i
-    //elem = document.getElementById(i);
+    console.log("Random character: ", letters[i]);
+
     if (letters[i] == centerLetter) {
         index = i;
-        console.log("What is index: ", index);
         indexLetter = letters[i];
-        console.log("What is index letter: ", indexLetter);
+        console.log("index: ", index);
+        console.log("index letter: ", letters[index]);
     }
 }
 
@@ -64,12 +62,12 @@ for (let i = 0; i < length; i++) {
         // retreive the element with id i
         elem = document.getElementById(index);
         // display the element with id i
-        elem.innerHTML = letters.slice(index, index+1);
+        elem.innerHTML = letters.slice(i, i+1);
     }
-    else if (i == index) {
+    else if(i == index) {
         elem = document.getElementById(3);
         // display the element with id i
-        elem.innerHTML = letters.slice(3, 3+1);
+        elem.innerHTML = letters.slice(index, index+1);
     }
     else {
         // retreive the element with id i
@@ -77,18 +75,18 @@ for (let i = 0; i < length; i++) {
         // display the element with id i
         elem.innerHTML = letters.slice(i, i+1);
     }
-}*/
+}
     
-    /*if (document.getElementById(i) == centerLetter) {
-        index = i;
-elem = document.getElementById(i);
-if (document.getElementById(3) != centerLetter) {
-    document.getElementById(index) = document.getElementById(3);
-    document.getElementById(3) = centerLetter;
+/*if (document.getElementById(i) == centerLetter) {
+    index = i;
+    elem = document.getElementById(i);
+    if (document.getElementById(3) != centerLetter) {
+        document.getElementById(index) = document.getElementById(3);
+        document.getElementById(3) = centerLetter;
 }
 
 for (let i = 0; i < length; i++) {
-    // display the element with id i
+    
     
 }*/
 
