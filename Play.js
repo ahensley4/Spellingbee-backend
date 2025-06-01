@@ -3,7 +3,7 @@
 // Start or resume session
 let sessionId = localStorage.getItem("session_id");
 let letters = localStorage.getItem("letters");
-let centerLetter = localStorage.getItem("center_letter");
+let center = localStorage.getItem("center_letter");
 
 // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -23,8 +23,8 @@ if (!sessionId) {
     console.log("Center Letter: ", data.center_letter);
     // stores session id
     localStorage.setItem("session_id", data.session_id);
-    localStorage.setItem("letters, " ,data.letters);
-    localStorage.setItem("centerLetter, ", data.center_letter);
+    localStorage.setItem("letters", data.letters);
+    localStorage.setItem("center_letter", data.center_letter);
     xmlhttp.onerror = function () {
         console.error("Error creating session", err);
     }
@@ -37,13 +37,13 @@ console.log("send a request to a server");
 else {
     console.log("Resuming session:", sessionId);
     console.log("Daily letters:", letters);
-    console.log("Center letter:", centerLetter);
+    console.log("Center letter:", center);
 }
 
 // Start or resume session: fetch version
 /*let sessionId = localStorage.getItem("session_id");
 let letters = localStorage.getItem("letters");
-let centerLetter = localStorage.getItem("center_letter");
+let center = localStorage.getItem("center_letter");
 
 // start new session
 if (!sessionId) {
@@ -53,21 +53,21 @@ if (!sessionId) {
     .then(data => {
         sessionId = data.session_id;
         letters = data.letters;
-        centerLetter = data.center_letter;
+        center = data.center_letter;
         // store data within user's browser: data available after browser is closed and reopened
         localStorage.setItem("session_id", sessionId);
         localStorage.setItem("letters", letters);   
-        localStorage.setItem("center_letter", centerLetter);
+        localStorage.setItem("center_letter", center);
         console.log("New session:", sessionId);
         console.log("Daily letters:", letters);
-        console.log("Center letter:", centerLetter);
+        console.log("Center letter:", center);
     })
     .catch(err => console.error("Error creating session", err));
     // resume session
     } else {
         console.log("Resuming session:", sessionId);
         console.log("Daily letters:", letters);
-        console.log("Center letter:", centerLetter);
+        console.log("Center letter:", center);
 }*/
 
 let length = letters.length;
@@ -77,10 +77,10 @@ console.log("Letters' length: ", length);
 let elem = "";
 let index = 0;
 let indexLetter = "";
-console.log("Center letter: ", centerLetter);
+console.log("Center letter: ", center);
 for (let i = 0; i < length; i++) {
     console.log("Random character: ", letters[i]);
-    if (letters[i] == centerLetter) {
+    if (letters[i] == center) {
         index = i;
         indexLetter = letters[i];
     }
@@ -176,14 +176,97 @@ function deleteButton() {
 let readyToSubmit = false;
 let inputActive = true;
 
+/*let isValid = localStorage.getItem("valid");
+let displayMessage = localStorage.getItem("message");
+let point = localStorage.getItem("points_awarded"); 
+let score = localStorage.getItem("total_score");
+let ranking = localStorage.getItem("rank");
+let count = localStorage.getItem("words_found");*/
+
+let isValid = "";
+let displayMessage = "";
+let point = ""; 
+let score = localStorage.getItem("total_score");
+let ranking = localStorage.getItem("rank");
+let count = localStorage.getItem("words_found");
+
 //function to submit guess word
 function enterButton() {
     inputActive = false;
     console.log("Enter button was pressed");
-    readyToSubmit = wordCheck();
+    console.log("send to REST");
+    // create XMLHttpRequest object "xmlhttp" to request data from a web server
+    const xmlhttp = new XMLHttpRequest();
+    // open the XMLHttpRequest object
+    xmlhttp.open("POST", "http://localhost:8001/check_word"); 
+
+    //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    // define a callback function
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        console.log("response received back from a server");
+        var data = JSON.parse(xmlhttp.responseText);
+        isValid = data.valid;
+        displayMessage = data.message;
+        point = data.points_awarded;
+        score = data.total_score;
+        ranking = data.rank;
+        count = data.words_found;
+        if (isValid) {
+            localStorage.setItem("total_score", data.total_score);
+            localStorage.setItem("rank", data.rank);
+            localStorage.setItem("words_found", data.words_found);
+            displayPopup(displayMessage);
+        }
+        else if (!isValid) {
+            displayPopup(displayMessage);
+        }
+        console.log("isValid: ", isValid);
+        console.log("displayMessage: ", displayMessage);
+        console.log("point: ", point);
+        console.log("score: ", score);
+        console.log("ranking: ", ranking);
+        console.log("count: ", count);
+        console.log("Check result: ", data);
+        }
+        else {
+            console.log("Something happened");
+        }
+    };
+    xmlhttp.onerror = function () {
+        console.error("Error message: ", err);
+    }
+
+    // send a request to a server
+    xmlhttp.send(JSON.stringify({
+    word: guessWord,
+    session_id: sessionId,
+    all_letters: letters,
+    center_letter: center
+    }));
+    console.log("send a request to a server");
+
+    //test code
+    /*fetch("http://127.0.0.1:8001/check_word", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            word: guessWord,
+            session_id: sessionId,
+            all_letters: letters,
+            center_letter: center
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Check result:", data);
+    });*/
+    //requestWordCheck();
+    /*readyToSubmit = wordCheck();
     if (readyToSubmit) {
         console.log("Send the word to the REST API to check");
-        //requestWordCheck();
+        requestWordCheck();
         //popup message if not a valid word 
         //popupInvalid()
     } 
@@ -206,7 +289,10 @@ function enterButton() {
         // popup message: no key word
         popupNoKey();
     }
-    return readyToSubmit;
+    return readyToSubmit;*/
+    guessWord = guessWord.slice(0, 0);
+    displayString();
+    inputActive = true;
 }
 
 function clearButton() {
@@ -216,7 +302,7 @@ function clearButton() {
 }
 
 // function to popup: tooshort
-function popupShort() {
+/*function popupShort() {
     var popup = document.getElementById("tooShort");
     console.log("word is too short");
     popup.classList.add("show"); 
@@ -224,16 +310,16 @@ function popupShort() {
     setTimeout(() => {
       popup.classList.remove("show");
     }, 1500);
-}
+}*/
 
-function popupNoKey() {
+/*function popupNoKey() {
     const popup = document.getElementById("noKey");
     console.log("key word is not used");
     popup.classList.add("show");
     setTimeout(() => {
       popup.classList.remove("show");
     }, 1500);
-}
+}*/
 
 document.onkeydown = keyPressed;
 
@@ -269,24 +355,21 @@ function keyPressed(event) {
     }
 }
 
-function popupMessage() {
-    const popup = document.getElementById("fromServer");
-    console.log("message: " );
-    popup.classList.add("show");
-    setTimeout(() => {
-      popup.classList.remove("show");
-    }, 1500);
-}
+    function displayPopup(displayMessage) {
 
-/*let isvalid = localStorage.getItem(valid);
-let displayMessage = localStorage.getItem(message);
-let point = localStorage.getItem(points_awarded); 
-let score = localStorage.getItem(total_score);
-let ranking = localStorage.getItem(rank);
-let count = localStorage.getItem(words_found);
+        const popup = document.getElementById('myPopup');
+        const popupMessageElement = document.getElementById('popupMessage');
+        popupMessageElement.textContent = displayMessage;
+        popup.style.display = 'flex'; // Show the popup
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('myPopup');
+        popup.style.display = 'none'; // Hide the popup
+    }
 
 // send a request to a server for word check (and rank?)
-function requestWordCheck() {
+/*function requestWordCheck() {
     console.log("send to REST");
     // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -296,26 +379,26 @@ function requestWordCheck() {
     //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     // define a callback function
-    xmlhttp.onload = function () {
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         console.log("response received back from a server");
-        // convert JSON into string
-        JSON.stringify({
-            guessWord,
-            session_id: sessionId,
-            all_letters: letters,
-            center_letter: centerLetter 
-        })
-    
-  .then(res => res.json())
-  .then(data => {
-    console.log("Check result:", data);
-  });
+        var data = JSON.parse(xhr.responseText);
+        console.log("Check result:", data);
+        }
+    };
+    xmlhttp.onerror = function () {
+        console.error("Error message: ", err);
     }
+
     // send a request to a server
-    xmlhttp.send();
+    xmlhttp.send(JSON.stringify({
+    word, guessWord,
+    session_id: sessionId,
+    all_letters: letters,
+    //center_letter: center
+    }));
     console.log("send a request to a server");
 }*/
-
 
 /*function popupBadLetter() {
     if (!inValidKey) {
@@ -359,5 +442,10 @@ function requestRestartSession() {
             console.log("Game restarted:", data.message);
         }
     };
+    xmlhttp.onerror = function () {
+        console.error("Error missing session ID", err);
+    }
     xmlhttp.send(JSON.stringify({ session_id: sessionId }));
 }
+
+

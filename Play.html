@@ -17,13 +17,26 @@
         </div> -->
         
         <!-- popup message -->
-        <div class="popup">
+        <!--<div class="popup">
             <div class="popuptext" id="tooShort">too short</div>
             <div class="popuptext" id="noKey">doesn't contain center letter</div>
             <div class="popuptext" id="badLetter">bad letter</div>
             <div class="popuptext" id="fromServer"></div>
+        </div>-->
 
+                <!-- test 
+         <div id="popup" class="popuptext">
+            <div class="popup-content">
+                <p id="fromServer"></p>
+            </div>
+        </div>-->
+
+            <div id="myPopup" class="popup-container">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">&times;</span>
+            <p id="popupMessage"></p>
         </div>
+    </div>
 
         <p id="display"><span id="currentString"></span></p>  <!--display output -->
         <div class="rank" id="rankString">Beginner</div> <!-- display rank -->
