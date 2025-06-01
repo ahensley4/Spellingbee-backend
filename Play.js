@@ -22,7 +22,7 @@ if (!sessionId) {
     console.log("Daily Letters: ", data.letters);
     console.log("Center Letter: ", data.center_letter);
     // stores session id
-    localStorage.setItem("session_id", data.session_id);
+    localStorage.setItem("session_id", sessionId);
     localStorage.setItem("letters", data.letters);
     localStorage.setItem("center_letter", data.center_letter);
     xmlhttp.onerror = function () {
@@ -203,8 +203,7 @@ function enterButton() {
     //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     // define a callback function
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+    xmlhttp.onload = function () {
         console.log("response received back from a server");
         var data = JSON.parse(xmlhttp.responseText);
         isValid = data.valid;
@@ -213,6 +212,13 @@ function enterButton() {
         score = data.total_score;
         ranking = data.rank;
         count = data.words_found;
+        console.log("isValid: ", isValid);
+        console.log("displayMessage: ", displayMessage);
+        console.log("point: ", point);
+        console.log("score: ", score);
+        console.log("ranking: ", ranking);
+        console.log("count: ", count);
+        console.log("Check result: ", data);
         if (isValid) {
             localStorage.setItem("total_score", data.total_score);
             localStorage.setItem("rank", data.rank);
@@ -222,20 +228,13 @@ function enterButton() {
         else if (!isValid) {
             displayPopup(displayMessage);
         }
-        console.log("isValid: ", isValid);
-        console.log("displayMessage: ", displayMessage);
-        console.log("point: ", point);
-        console.log("score: ", score);
-        console.log("ranking: ", ranking);
-        console.log("count: ", count);
-        console.log("Check result: ", data);
-        }
         else {
             console.log("Something happened");
         }
-    };
-    xmlhttp.onerror = function () {
+        xmlhttp.onerror = function () {
         console.error("Error message: ", err);
+    }
+    
     }
 
     // send a request to a server
@@ -294,6 +293,7 @@ function enterButton() {
     displayString();
     inputActive = true;
 }
+
 
 function clearButton() {
     console.log("Retry button was pressed");
