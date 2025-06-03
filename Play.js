@@ -384,15 +384,23 @@ function displayScore(score) {
             break;
         case score >= 10 && score < 50:
             console.log("score is between 10 and 49");
+            elem = document.getElementById("Good");
+            elem.innerHTML = score;
             break;
         case score >= 50 && score < 75:
             console.log("score is between 50 and 74");
+            elem = document.getElementById("Great");
+            elem.innerHTML = score;
             break;
         case score >= 75 && score < 100:
             console.log("score is between 75 and 99");
+            elem = document.getElementById("Amazing");
+            elem.innerHTML = score;
             break;
         case score >= 100:
             console.log("score is over 100");
+            elem = document.getElementById("Genius");
+            elem.innerHTML = score;
             break;
         default:
             console.log("score is outside the specified ranges");
