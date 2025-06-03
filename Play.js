@@ -230,8 +230,8 @@ function enterButton() {
             displayScore(score);
             // display rank
             displayRank(ranking);
-
-            
+            // display word count
+            displayCount(count);
             
         }
         else if (!isValid) {
@@ -242,8 +242,7 @@ function enterButton() {
         }
         xmlhttp.onerror = function () {
         console.error("Error message: ", err);
-    }
-    
+        }   
     }
 
     // send a request to a server
@@ -413,10 +412,19 @@ function displayScore(score) {
 elem = document.getElementById("rankString");
 elem.innerHTML = "Beginner";
 
+elem = document.getElementById("wordCount");
+elem.innerHTML = count;
+
 // function to display rank
 function displayRank(ranking) {
     elem = document.getElementById("rankString");
     elem.innerHTML = ranking;
+}
+
+// function to display word count 
+function displayCount(count) {
+    elem = document.getElementById("wordCount");
+    elem.innerHTML = count;
 }
 
 // send a request to a server for word check (and rank?)
@@ -461,9 +469,8 @@ function displayRank(ranking) {
         }, 1500);
     }
 }*/
-
-function restart() {
-    var txt;
+var txt = "";
+function restart() { 
     if (confirm("Are you sure to reset your score to 0?")) {
         txt = "OK";
         requestRestartSession();

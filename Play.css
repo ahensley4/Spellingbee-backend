@@ -26,6 +26,14 @@ p {
     font-weight: bold;
 }
 
+.count {
+    position: absolute;
+    top: 70px;
+    right: 500px;
+    font-size: 20px; 
+    font-weight: solid;
+}
+
 /* whole square class */
 .square {
     max-width: 700px;
@@ -130,12 +138,6 @@ p {
     transform: translate(-50%, -50%);
 }
 
-  
-
-    
-
-
-
 /* if we want to use hexagon instead of square*/
 /*body {
     height: 10vh;
@@ -182,20 +184,20 @@ p {
         align-items: center;
     }
 
-    .popup-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        position: relative;
-    }
+.popup-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
 
-    .close-button {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
