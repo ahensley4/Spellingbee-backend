@@ -185,7 +185,7 @@ let count = localStorage.getItem("words_found");*/
 
 let isValid = "";
 let displayMessage = "";
-let point = ""; 
+let point = 0; 
 let score = localStorage.getItem("total_score");
 let ranking = localStorage.getItem("rank");
 let count = localStorage.getItem("words_found");
@@ -219,11 +219,17 @@ function enterButton() {
         console.log("ranking: ", ranking);
         console.log("count: ", count);
         console.log("Check result: ", data);
+        // if the word is valid
         if (isValid) {
             localStorage.setItem("total_score", data.total_score);
             localStorage.setItem("rank", data.rank);
             localStorage.setItem("words_found", data.words_found);
+            // display popup message
             displayPopup(displayMessage);
+            //test code
+            displayPoint(point);
+            
+
         }
         else if (!isValid) {
             displayPopup(displayMessage);
@@ -355,18 +361,40 @@ function keyPressed(event) {
     }
 }
 
-    function displayPopup(displayMessage) {
+function displayPopup(displayMessage) {
+    const popup = document.getElementById('myPopup');
+    const popupMessageElement = document.getElementById('popupMessage');
+    popupMessageElement.textContent = displayMessage;
+    popup.style.display = 'flex'; // Show the popup
+}
 
-        const popup = document.getElementById('myPopup');
-        const popupMessageElement = document.getElementById('popupMessage');
-        popupMessageElement.textContent = displayMessage;
-        popup.style.display = 'flex'; // Show the popup
-    }
+function closePopup() {
+    const popup = document.getElementById('myPopup');
+    popup.style.display = 'none'; // Hide the popup
+}
 
-    function closePopup() {
-        const popup = document.getElementById('myPopup');
-        popup.style.display = 'none'; // Hide the popup
+function displayPoint(point) {
+    console.log("Display point was called");
+    switch (true) {
+        case point >= 0 && point < 10:
+            console.log("Value is between 0 and 9");
+            break;
+        case point >= 10 && point < 50:
+            console.log("Value is between 10 and 49");
+            break;
+        case point >= 50 && point < 75:
+            console.log("Value is between 50 and 74");
+            break;
+        case point >= 75 && point < 100:
+            console.log("Value is between 75 and 99");
+            break;
+        case point >= 100:
+            console.log("Value is over 100");
+            break;
+        default:
+            console.log("Value is outside the specified ranges");
     }
+}
 
 // send a request to a server for word check (and rank?)
 /*function requestWordCheck() {
