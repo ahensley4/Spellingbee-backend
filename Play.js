@@ -228,8 +228,11 @@ function enterButton() {
             displayPopup(displayMessage);
             // display score
             displayScore(score);
-            
+            // display rank
+            displayRank(ranking);
 
+            
+            
         }
         else if (!isValid) {
             displayPopup(displayMessage);
@@ -405,6 +408,15 @@ function displayScore(score) {
         default:
             console.log("score is outside the specified ranges");
     }
+}
+
+elem = document.getElementById("rankString");
+elem.innerHTML = "Beginner";
+
+// function to display rank
+function displayRank(ranking) {
+    elem = document.getElementById("rankString");
+    elem.innerHTML = ranking;
 }
 
 // send a request to a server for word check (and rank?)
