@@ -226,8 +226,8 @@ function enterButton() {
             localStorage.setItem("words_found", data.words_found);
             // display popup message
             displayPopup(displayMessage);
-            //test code
-            displayPoint(point);
+            // display score
+            displayScore(score);
             
 
         }
@@ -373,26 +373,29 @@ function closePopup() {
     popup.style.display = 'none'; // Hide the popup
 }
 
-function displayPoint(point) {
-    console.log("Display point was called");
+// function to display score
+function displayScore(score) {
+    console.log("displayScore was called");
     switch (true) {
-        case point >= 0 && point < 10:
-            console.log("Value is between 0 and 9");
+        case score >= 0 && score < 10:
+            console.log("score is between 0 and 9");
+            elem = document.getElementById("Beginner");
+            elem.innerHTML = score;
             break;
-        case point >= 10 && point < 50:
-            console.log("Value is between 10 and 49");
+        case score >= 10 && score < 50:
+            console.log("score is between 10 and 49");
             break;
-        case point >= 50 && point < 75:
-            console.log("Value is between 50 and 74");
+        case score >= 50 && score < 75:
+            console.log("score is between 50 and 74");
             break;
-        case point >= 75 && point < 100:
-            console.log("Value is between 75 and 99");
+        case score >= 75 && score < 100:
+            console.log("score is between 75 and 99");
             break;
-        case point >= 100:
-            console.log("Value is over 100");
+        case score >= 100:
+            console.log("score is over 100");
             break;
         default:
-            console.log("Value is outside the specified ranges");
+            console.log("score is outside the specified ranges");
     }
 }
 
@@ -440,7 +443,7 @@ function displayPoint(point) {
 }*/
 
 function restart() {
-    var txt = "";
+    var txt;
     if (confirm("Are you sure to reset your score to 0?")) {
         txt = "OK";
         requestRestartSession();
