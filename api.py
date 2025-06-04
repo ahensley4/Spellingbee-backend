@@ -166,5 +166,23 @@ api.add_resource(CreateSession, "/create_session")
 api.add_resource(CheckWord, "/check_word")
 api.add_resource(RestartSession, "/restart_session")
 
+class GetGuesses(Resource):
+    def get(self):
+        session_id = request.args.get("session_id", "").strip()
+        if not session_id:
+            return {"error": "Missing session_id"}, 400
+
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT word FROM guesses WHERE session_id = %s", (session_id,))
+        guesses = [row[0] for row in cursor.fetchall()]
+        cursor.close()
+        conn.close()
+
+        return {"guessed_words": guesses}
+
+# Then register the new endpoint at the bottom of your file
+api.add_resource(GetGuesses, "/get_guesses")
+
 if __name__ == "__main__":
     app.run(port=8001)
