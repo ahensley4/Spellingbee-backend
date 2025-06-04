@@ -4,6 +4,13 @@
 let sessionId = localStorage.getItem("session_id");
 let letters = localStorage.getItem("letters");
 let center = localStorage.getItem("center_letter");
+let elem = "";
+let isValid = "";
+let displayMessage = "";
+let point = 0; 
+let score = localStorage.getItem("total_score");
+let ranking = localStorage.getItem("rank");
+let count = localStorage.getItem("words_found");
 
 // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -25,6 +32,16 @@ if (!sessionId) {
     localStorage.setItem("session_id", sessionId);
     localStorage.setItem("letters", data.letters);
     localStorage.setItem("center_letter", data.center_letter);
+    // display score as 0
+    elem = document.getElementById("Beginner");
+    elem.innerHTML = 0;
+    // display ranking as Beginner
+    elem = document.getElementById("rankString");
+    elem.innerHTML = "Beginner";
+    // display word count as 0
+    elem = document.getElementById("wordCount");
+    elem.innerHTML = 0;
+    // diplay guessed word list
     xmlhttp.onerror = function () {
         console.error("Error creating session", err);
     }
@@ -38,6 +55,16 @@ else {
     console.log("Resuming session:", sessionId);
     console.log("Daily letters:", letters);
     console.log("Center letter:", center);
+    // display score as 0
+    elem = document.getElementById("Beginner");
+    elem.innerHTML = score;
+    // display ranking as Beginner
+    elem = document.getElementById("rankString");
+    elem.innerHTML = ranking;
+    // display word count as 0
+    elem = document.getElementById("wordCount");
+    elem.innerHTML = count;
+    // diplay guessed word list
 }
 
 // Start or resume session: fetch version
@@ -74,7 +101,7 @@ let length = letters.length;
 
 // display the center letter in center position 
 console.log("Letters' length: ", length);
-let elem = "";
+
 let index = 0;
 let indexLetter = "";
 console.log("Center letter: ", center);
@@ -182,13 +209,6 @@ let point = localStorage.getItem("points_awarded");
 let score = localStorage.getItem("total_score");
 let ranking = localStorage.getItem("rank");
 let count = localStorage.getItem("words_found");*/
-
-let isValid = "";
-let displayMessage = "";
-let point = 0; 
-let score = localStorage.getItem("total_score");
-let ranking = localStorage.getItem("rank");
-let count = localStorage.getItem("words_found");
 
 //function to submit guess word
 function enterButton() {
@@ -388,32 +408,52 @@ function displayScore(score) {
             console.log("score is between 10 and 49");
             elem = document.getElementById("Good");
             elem.innerHTML = score;
+            elem = document.getElementById("Beginner");
+            elem.innerHTML = "";
             break;
         case score >= 50 && score < 75:
             console.log("score is between 50 and 74");
             elem = document.getElementById("Great");
             elem.innerHTML = score;
+            elem = document.getElementById("Good");
+            elem.innerHTML = "";
+            elem = document.getElementById("Beginner");
+            elem.innerHTML = "";
             break;
         case score >= 75 && score < 100:
             console.log("score is between 75 and 99");
             elem = document.getElementById("Amazing");
             elem.innerHTML = score;
+            elem = document.getElementById("Great");
+            elem.innerHTML = "";
+            elem = document.getElementById("Good");
+            elem.innerHTML = "";
+            elem = document.getElementById("Beginner");
+            elem.innerHTML = "";
             break;
         case score >= 100:
             console.log("score is over 100");
             elem = document.getElementById("Genius");
             elem.innerHTML = score;
+            elem = document.getElementById("Amazing");
+            elem.innerHTML = "";
+            elem = document.getElementById("Great");
+            elem.innerHTML = "";
+            elem = document.getElementById("Good");
+            elem.innerHTML = "";
+            elem = document.getElementById("Beginner");
+            elem.innerHTML = "";
             break;
         default:
             console.log("score is outside the specified ranges");
     }
 }
 
-elem = document.getElementById("rankString");
+/*elem = document.getElementById("rankString");
 elem.innerHTML = "Beginner";
 
 elem = document.getElementById("wordCount");
-elem.innerHTML = count;
+elem.innerHTML = 0;*/
 
 // function to display rank
 function displayRank(ranking) {
@@ -426,6 +466,7 @@ function displayCount(count) {
     elem = document.getElementById("wordCount");
     elem.innerHTML = count;
 }
+
 
 // send a request to a server for word check (and rank?)
 /*function requestWordCheck() {
@@ -473,10 +514,18 @@ var txt = "";
 function restart() { 
     if (confirm("Are you sure to reset your score to 0?")) {
         txt = "OK";
+        guessWord = guessWord.slice(0, 0);
+        /*localStorage.setItem("total_score", 0);
+        localStorage.setItem("rank", "Beginner");
+        localStorage.setItem("words_found", 0);*/
+        ranking = "Beginner";
+        score = 0;
+        count = 0;
+        displayRank(ranking);
+        displayScore(score);
+        displayCount(count);
         requestRestartSession();
-
-    guessWord = guessWord.slice(0, 0);
-    displayString();
+        displayString();
     } 
     else {
     txt = "Cancel";
