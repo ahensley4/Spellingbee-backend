@@ -11,6 +11,22 @@
   /*height: 100vh;*/
 /*}*/
 
+/* list of words */
+.word-column {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Changed from row to column */
+    gap: 10px; /* space between words vertically */
+}
+
+.word {
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
 /* output */
 p {
     text-align: center;
@@ -29,7 +45,7 @@ p {
 .count div:nth-child(1){
     position: absolute;
     top: 70px;
-    right: 480px;
+    right: 460px;
     font-size: 20px; 
     font-weight: solid;
 }
@@ -41,6 +57,23 @@ p {
     font-size: 20px; 
     font-weight: solid;
 }
+
+/*.count div:nth-child(1){
+    position: absolute;
+    top: 30px;
+    left: 150px;
+    font-size: 20px; 
+    font-weight: bold;
+}
+
+.count > div:nth-child(2) {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 20px; 
+    font-weight: bold;
+}*/
+
 
 /* whole square class */
 .square {
@@ -140,7 +173,7 @@ p {
     font-weight: bold;
     border-radius: 50%;
     left: 50%;
-    top: 65%;
+    top: 70%;
     position: absolute;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

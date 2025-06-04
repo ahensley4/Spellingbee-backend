@@ -11,6 +11,8 @@ let point = 0;
 let score = localStorage.getItem("total_score");
 let ranking = localStorage.getItem("rank");
 let count = localStorage.getItem("words_found");
+let guessWord = "";
+let list = localStorage.getItem("list");
 
 // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -28,9 +30,11 @@ if (!sessionId) {
     console.log("New session: ", sessionId);
     console.log("Daily Letters: ", data.letters);
     console.log("Center Letter: ", data.center_letter);
-    // stores session id
+    // stores session id in the browser
     localStorage.setItem("session_id", sessionId);
+    // stores 7 letters in the brower
     localStorage.setItem("letters", data.letters);
+    // store center letter in the brower
     localStorage.setItem("center_letter", data.center_letter);
     // display score as 0
     elem = document.getElementById("Beginner");
@@ -42,6 +46,8 @@ if (!sessionId) {
     elem = document.getElementById("wordCount");
     elem.innerHTML = 0;
     // diplay guessed word list
+    elem = document.getElementById("wordColumn");
+    elem.innerHTML = [];
     xmlhttp.onerror = function () {
         console.error("Error creating session", err);
     }
@@ -55,17 +61,30 @@ else {
     console.log("Resuming session:", sessionId);
     console.log("Daily letters:", letters);
     console.log("Center letter:", center);
-    // display score as 0
-    elem = document.getElementById("Beginner");
+
+    /*elem = document.getElementById("Beginner");
     elem.innerHTML = score;
-    // display ranking as Beginner
+
     elem = document.getElementById("rankString");
     elem.innerHTML = ranking;
-    // display word count as 0
+
     elem = document.getElementById("wordCount");
-    elem.innerHTML = count;
+    elem.innerHTML = count;*/
+    score = localStorage.getItem("total_score");
+    ranking = localStorage.getItem("rank");
+    count = localStorage.getItem("words_found");
+    displayScore(score);
+    displayRank(ranking);
+    displayCount(count);
+    //displayList(list);
+
     // diplay guessed word list
 }
+
+
+
+
+
 
 // Start or resume session: fetch version
 /*let sessionId = localStorage.getItem("session_id");
@@ -173,7 +192,7 @@ for (let i = 0; i < 7; i++) {
     return resultArray.join('');
 }*/
 
-let guessWord = "";
+
 
 // function to display current guess word
 function displayString() {
@@ -244,6 +263,7 @@ function enterButton() {
             localStorage.setItem("total_score", data.total_score);
             localStorage.setItem("rank", data.rank);
             localStorage.setItem("words_found", data.words_found);
+            localStorage.setItem("list", guessWord);
             // display popup message
             displayPopup(displayMessage);
             // display score
@@ -252,7 +272,8 @@ function enterButton() {
             displayRank(ranking);
             // display word count
             displayCount(count);
-            
+            //display word list
+            //displayList(list);  
         }
         else if (!isValid) {
             displayPopup(displayMessage);
@@ -467,6 +488,17 @@ function displayCount(count) {
     elem.innerHTML = count;
 }
 
+/*function displayList(list) {
+    let wordColumn = document.getElementById("wordColumn");
+    // Create and append word elements
+    list.forEach(word => {
+    const span = document.createElement("span");
+    span.className = "word";
+    span.textContent = word;
+    wordColumn.appendChild(span);
+  });
+}*/
+
 
 // send a request to a server for word check (and rank?)
 /*function requestWordCheck() {
@@ -515,12 +547,16 @@ function restart() {
     if (confirm("Are you sure to reset your score to 0?")) {
         txt = "OK";
         guessWord = guessWord.slice(0, 0);
-        /*localStorage.setItem("total_score", 0);
+        localStorage.setItem("total_score", 0);
         localStorage.setItem("rank", "Beginner");
-        localStorage.setItem("words_found", 0);*/
-        ranking = "Beginner";
+        localStorage.setItem("words_found", 0);
+        ranking = localStorage.getItem("rank");
+        score = localStorage.getItem("total_score");
+        count = localStorage.getItem("words_found");
+        /*ranking = "Beginner";
         score = 0;
-        count = 0;
+        count = 0;*/
+        //localStorage.clear();
         displayRank(ranking);
         displayScore(score);
         displayCount(count);
@@ -554,5 +590,6 @@ function requestRestartSession() {
     }
     xmlhttp.send(JSON.stringify({ session_id: sessionId }));
 }
+
 
 
