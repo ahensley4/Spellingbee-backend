@@ -61,6 +61,7 @@ else {
     console.log("Resuming session:", sessionId);
     console.log("Daily letters:", letters);
     console.log("Center letter:", center);
+    console.log("Word list:", list);
 
     /*elem = document.getElementById("Beginner");
     elem.innerHTML = score;
@@ -73,12 +74,11 @@ else {
     score = localStorage.getItem("total_score");
     ranking = localStorage.getItem("rank");
     count = localStorage.getItem("words_found");
+    list = localStorage.getItem("list");
     displayScore(score);
     displayRank(ranking);
     displayCount(count);
-    //displayList(list);
-
-    // diplay guessed word list
+    displayList();
 }
 
 
@@ -273,7 +273,8 @@ function enterButton() {
             // display word count
             displayCount(count);
             //display word list
-            //displayList(list);  
+            console.log("list: ", list);
+            displayList();  
         }
         else if (!isValid) {
             displayPopup(displayMessage);
@@ -499,6 +500,20 @@ function displayCount(count) {
   });
 }*/
 
+function displayList() {
+    let array = [];
+    console.log("displayList was called")
+    console.log("list before", array);
+    array.push(guessWord);
+    console.log("list after", array);
+    array = document.getElementById("wordList");
+    for (let i = 0; i < array.length; i++) {
+        const item = document.createElement("li");
+        item.textContent = array[i];
+        array.appendChild(item);
+    }
+}
+   
 
 // send a request to a server for word check (and rank?)
 /*function requestWordCheck() {
