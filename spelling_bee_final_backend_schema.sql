@@ -1,4 +1,4 @@
--- Final Spelling Bee Schema Based on 2025GroupProject and PresentationChecklist
+
 
 -- Stores all valid words (used only by backend)
 DROP TABLE IF EXISTS valid_words;
