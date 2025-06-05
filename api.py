@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, render_template
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import uuid
@@ -48,11 +48,8 @@ class DailyLetters(Resource):
         if not result:
             vowels = [ch for ch in "aeiou"]
             consonants = [ch for ch in string.ascii_lowercase if ch not in vowels and ch != "y"]
-
-            letters = random.sample(consonants, 6)  # 6 consonants
-            letters.append(random.choice(vowels))  # 1 vowel
-            random.shuffle(letters)  # shuffle so vowel isn't always last
-
+            letters = random.sample(consonants, 6) + [random.choice(vowels)]
+            random.shuffle(letters)
             center_letter = random.choice(letters)
             cursor.execute("INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
                            (today, ''.join(letters), center_letter))
@@ -72,65 +69,50 @@ class CreateSession(Resource):
         cursor.execute("SELECT letters, center_letter FROM daily_letters WHERE game_date = %s", (today,))
         result = cursor.fetchone()
         if not result:
-            cursor.close()
-            conn.close()
             return {"error": "Daily letters not initialized"}, 500
 
         cursor.execute("INSERT INTO game_sessions (session_id, game_date) VALUES (%s, %s)", (session_id, today))
         conn.commit()
         cursor.close()
         conn.close()
-        return {
-            "session_id": session_id,
-            "letters": result[0],
-            "center_letter": result[1]
-        }
+        return {"session_id": session_id, "letters": result[0], "center_letter": result[1]}
 
 class CheckWord(Resource):
     def post(self):
         data = request.get_json()
-        word = data.get("word", "").lower().strip()
-        session_id = data.get("session_id", "").strip()
-        all_letters = data.get("all_letters", "").lower().strip()
-        center_letter = data.get("center_letter", "").lower().strip()
+        word = data.get("word", "").lower()
+        session_id = data.get("session_id", "")
+        all_letters = data.get("all_letters", "").lower()
+        center_letter = data.get("center_letter", "").lower()
 
-        if not word or not session_id or not center_letter:
-            return {"error": "Missing required data"}, 400
-        if len(word) < 4:
-            return {"valid": False, "message": "Too short"}
-        if center_letter not in word:
-            return {"valid": False, "message": "Doesn't contain center letter"}
+        if not all([word, session_id, all_letters, center_letter]):
+            return {"error": "Missing data"}, 400
+
+        if len(word) < 4 or center_letter not in word or not all(c in all_letters for c in word):
+            return {"valid": False, "reason": "Invalid word structure or missing center letter"}
 
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("SELECT 1 FROM game_sessions WHERE session_id = %s", (session_id,))
-        if cursor.fetchone() is None:
-            cursor.close()
-            conn.close()
-            return {"error": "Invalid session ID"}, 400
-
         cursor.execute("SELECT 1 FROM valid_words WHERE word = %s", (word,))
-        if cursor.fetchone() is None:
+        if not cursor.fetchone():
             cursor.close()
             conn.close()
-            return {"valid": False, "message": "Invalid word"}
+            return {"valid": False, "reason": "Word not in dictionary"}
 
         cursor.execute("SELECT 1 FROM guesses WHERE session_id = %s AND word = %s", (session_id, word))
         if cursor.fetchone():
             cursor.close()
             conn.close()
-            return {"valid": False, "message": "Already found"}
+            return {"valid": False, "reason": "Word already guessed"}
 
         points, is_pangram = calculate_score(word, all_letters)
-        cursor.execute(
-            "INSERT INTO guesses (session_id, word, is_valid, points) VALUES (%s, %s, %s, %s)",
-            (session_id, word, True, points)
-        )
+        cursor.execute("INSERT INTO guesses (session_id, word, score, is_pangram) VALUES (%s, %s, %s, %s)",
+                       (session_id, word, points, is_pangram))
 
-        cursor.execute("SELECT COUNT(*), SUM(points) FROM guesses WHERE session_id = %s", (session_id,))
+        cursor.execute("SELECT COUNT(*), SUM(score) FROM guesses WHERE session_id = %s", (session_id,))
         count, total_score = cursor.fetchone()
-        total_score = total_score or 0
+        total_score = float(total_score or 0)  # ✅ Fix: convert Decimal to float
         rank = get_rank(total_score)
 
         cursor.close()
@@ -138,20 +120,20 @@ class CheckWord(Resource):
         conn.close()
 
         return {
-    "valid": True,
-    "message": "Pangram!!" if is_pangram else "Valid word!",
-    "points_awarded": int(points) if isinstance(points, Decimal) else points,
-    "total_score": int(total_score) if isinstance(total_score, Decimal) else total_score,
-    "rank": rank,
-    "words_found": count
-}
-
+            "valid": True,
+            "points": points,
+            "is_pangram": is_pangram,
+            "total_score": total_score,
+            "words_found": count,
+            "rank": rank
+        }
+    
 class RestartSession(Resource):
     def post(self):
         data = request.get_json()
-        session_id = data.get("session_id", "").strip()
+        session_id = data.get("session_id", "")
         if not session_id:
-            return {"error": "Missing session_id"}, 400
+            return {"error": "Missing session ID"}, 400
 
         conn = get_connection()
         cursor = conn.cursor()
@@ -159,32 +141,32 @@ class RestartSession(Resource):
         conn.commit()
         cursor.close()
         conn.close()
-        return {"message": "Game restarted. All guesses cleared."}
+        return {"status": "Session restarted"}
+
+class GetGuesses(Resource):
+    def get(self):
+        session_id = request.args.get("session_id", "")
+        if not session_id:
+            return {"error": "Missing session ID"}, 400
+
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT word FROM guesses WHERE session_id = %s", (session_id,))
+        results = cursor.fetchall()
+        guessed_words = [row[0] for row in results]
+        cursor.close()
+        conn.close()
+        return {"guessed_words": guessed_words}
+
+@app.route("/")
+def serve_game():
+    return render_template("Play.html")
 
 api.add_resource(DailyLetters, "/daily_letters")
 api.add_resource(CreateSession, "/create_session")
 api.add_resource(CheckWord, "/check_word")
 api.add_resource(RestartSession, "/restart_session")
-
-class GetGuesses(Resource):
-    def get(self):
-        session_id = request.args.get("session_id", "").strip()
-        if not session_id:
-            return {"error": "Missing session_id"}, 400
-
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT word FROM guesses WHERE session_id = %s", (session_id,))
-        guesses = [row[0] for row in cursor.fetchall()]
-        cursor.close()
-        conn.close()
-
-        return {"guessed_words": guesses}
-
-# Then register the new endpoint at the bottom of your file
 api.add_resource(GetGuesses, "/get_guesses")
 
-
-
 if __name__ == "__main__":
-    app.run(port=8001)
+    app.run(debug=True, port=8001)

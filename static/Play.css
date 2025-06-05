@@ -1,0 +1,244 @@
+/* play.css */
+
+/*body {
+    margin: 100px;
+}*/
+
+/*body {*/
+  /*margin: 100px;*/
+  /*padding: 0;*/
+  /*position: relative;*/
+  /*height: 100vh;*/
+/*}*/
+
+/* list of words */
+.word-column {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Changed from row to column */
+    gap: 10px; /* space between words vertically */
+}
+
+.word {
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+/* output */
+p {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 200px;
+}
+
+.rank {
+    position: absolute;
+    top: 30px;
+    right: 500px;
+    font-size: 25px; 
+    font-weight: bold;
+}
+
+.count div:nth-child(1){
+    position: absolute;
+    top: 70px;
+    right: 460px;
+    font-size: 20px; 
+    font-weight: solid;
+}
+
+.count > div:nth-child(2) {
+    position: absolute;
+    top: 70px;
+    right: 500px;
+    font-size: 20px; 
+    font-weight: solid;
+}
+
+/*.count div:nth-child(1){
+    position: absolute;
+    top: 30px;
+    left: 150px;
+    font-size: 20px; 
+    font-weight: bold;
+}
+
+.count > div:nth-child(2) {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 20px; 
+    font-weight: bold;
+}*/
+
+
+/* whole square class */
+.square {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px; 
+    gap: 10px; 
+    cursor: pointer;
+    font-weight: bold; /* text in the box */
+    font-size: 30px;
+}
+
+/* each square class */
+.square > div {
+    background: lightgrey;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #777;
+}
+
+/* make the 4th square in yellow */
+.square > div:nth-child(4) {
+    background-color: #ffcc00;
+}
+
+/* whole button class: delete, refresh, and enter */
+.button {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* each button class */
+.button > div {
+    background: white;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #777;
+}
+
+/* Popup base style */
+/*.popup .popuptext {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: fixed;*/
+    /*top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
+}*/
+
+/* Visible state */
+/*.popup .show {
+    opacity: 1;
+}*/
+
+/* whole circle: display scores */
+.circle {
+    position: absolute;
+    top: 30px;
+    right: 130px;
+    display: flex;
+    gap: 50px; 
+}
+
+/* each circle */
+.circle > div {
+    width: 30px;
+    height: 30px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    font-size: 20px;
+    text-align:center;
+}
+
+.alert {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+    left: 50%;
+    top: 70%;
+    position: absolute;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* if we want to use hexagon instead of square*/
+/*body {
+    height: 10vh;
+    display: grid;
+    place-items: center;
+}
+
+.hexagon {
+    width: 150px;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-top: 150px solid lightgrey;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.hexagon::after {
+    content: "";
+    width: 100%;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-bottom: 150px solid lightgrey;
+    position: absolute;
+    left: 50%;
+    top: -224px;
+    transform: translate(-50%,-50%);
+    /*transform: rotate(180deg);
+}*/
+
+
+.popup-container {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+        justify-content: center;
+        align-items: center;
+    }
+
+.popup-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -1,94 +1,70 @@
-<!-- Play.html-->
+<!-- templates/Play.html -->
 <!DOCTYPE html> 
 <html>
-    <head> 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='Play.css') }}">
+    <title>Spelling Bee Game</title>
+</head>
+<body> 
 
-        <link rel="stylesheet" href="Play.css"> <!-- reference play.css file -->
-        <title>PLay</title>
-    </head>
-    <body> 
-        <!-- <div class="back"> 
-             <form action = "SpellingBee.html">  go back to home page 
-                <input type = "submit" value="Back">
-            </form>
-        </div> -->
-        
-        <!-- popup message -->
-        <!--<div class="popup">
-            <div class="popuptext" id="tooShort">too short</div>
-            <div class="popuptext" id="noKey">doesn't contain center letter</div>
-            <div class="popuptext" id="badLetter">bad letter</div>
-            <div class="popuptext" id="fromServer"></div>
-        </div>-->
-
-                <!-- test 
-         <div id="popup" class="popuptext">
-            <div class="popup-content">
-                <p id="fromServer"></p>
-            </div>
-        </div>-->
-       
-
-            <div id="myPopup" class="popup-container">
+    <!-- Popup message -->
+    <div id="myPopup" class="popup-container">
         <div class="popup-content">
             <span class="close-button" onclick="closePopup()">&times;</span>
             <p id="popupMessage"></p>
         </div>
     </div>
 
-        <p id="display"><span id="currentString"></span></p>  <!--display guess word -->
-        <div class="rank" id="rankString"></div> <!-- display rank -->
+    <!-- Current guessed word display -->
+    <p id="display"><span id="currentString"></span></p>  
+    <div class="rank" id="rankString"></div>
 
-        <div class="count">
-            <div class="count_item" id="wordCount"></div> <!-- display count -->
-            <div class="count_item" id="wordString">Word Count: </div> <!-- display count -->
-        </div>
+    <!-- Word count -->
+    <div class="count">
+        <div class="count_item" id="wordCount"></div>
+        <div class="count_item" id="wordString">Word Count: </div>
+    </div>
 
-        <div>
-            <h3>Guessed Words:</h3
-                <ul id="guessedWordsList"></ul>
-        </div>
-        <div id="wordColumn" style="margin-top: 1rem;"></div>
-        <div id="wordColumn"></div><div
-        <div id="guessedWordsList"></div>
-        
-        <!-- 7 square boxes -->
-        <div class="square"> 
-            <div class="square_item" id='0' onclick="addChar(0)"></div>
-            <div class="square_item" id='1' onclick="addChar(1)"></div>
-            <div class="square_item" id='2' onclick="addChar(2)"></div>
-            <div class="square_item" id='3' onclick="addChar(3)"></div>
-            <div class="square_item" id='4' onclick="addChar(4)"></div>
-            <div class="square_item" id='5' onclick="addChar(5)"></div>
-            <div class="square_item" id='6' onclick="addChar(6)"></div>
-        </div>
+    <!-- Guessed words -->
+    <div>
+        <h3>Guessed Words:</h3>
+        <ul id="guessedWordsList"></ul>
+    </div>
 
-        <!-- some interactive button -->
-        <div class="button">
-            <div class="button_item" id="delete" onclick="deleteButton()">Delete</div>
-            <div class="button_item" id="retry" onclick="clearButton()">Clear</div>
-            <div class="button_item" id="enter" onclick="enterButton()">Enter</div>
-        </div>
+    <div id="wordColumn" style="margin-top: 1rem;"></div>
 
-        <button class="alert" onclick="restart()">RESTART</button>
+    <!-- Letter boxes -->
+    <div class="square"> 
+        <div class="square_item" id='0' onclick="addChar(0)"></div>
+        <div class="square_item" id='1' onclick="addChar(1)"></div>
+        <div class="square_item" id='2' onclick="addChar(2)"></div>
+        <div class="square_item" id='3' onclick="addChar(3)"></div>
+        <div class="square_item" id='4' onclick="addChar(4)"></div>
+        <div class="square_item" id='5' onclick="addChar(5)"></div>
+        <div class="square_item" id='6' onclick="addChar(6)"></div>
+    </div>
 
-        <p id="alert"></p>
+    <!-- Buttons -->
+    <div class="button">
+        <div class="button_item" onclick="deleteButton()">Delete</div>
+        <div class="button_item" onclick="clearButton()">Clear</div>
+        <div class="button_item" onclick="enterButton()">Enter</div>
+    </div>
 
-        <!-- 5 circles -->
-         <div class="circle"> 
-            <div class="circle_item" id="Beginner"></div>
-            <div class="circle_item" id="Good"></div>
-            <div class="circle_item" id="Great"></div>
-            <div class="circle_item" id="Amazing"></div>
-            <div class="circle_item" id="Genius"></div>
-        </div>
+    <button class="alert" onclick="restart()">RESTART</button>
 
-         <ul id="wordList"></ul>
-        
-        <script type="text/javascript" src="Play.js"></script> <!-- reference play.js file -->
-    
-    </body>
+    <!-- Score circles -->
+    <div class="circle"> 
+        <div class="circle_item" id="Beginner"></div>
+        <div class="circle_item" id="Good"></div>
+        <div class="circle_item" id="Great"></div>
+        <div class="circle_item" id="Amazing"></div>
+        <div class="circle_item" id="Genius"></div>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='Play.js') }}"></script>
+</body>
 </html>
