@@ -88,8 +88,14 @@ class CheckWord(Resource):
         if not all([word, session_id, all_letters, center_letter]):
             return {"error": "Missing data"}, 400
 
-        if len(word) < 4 or center_letter not in word or not all(c in all_letters for c in word):
-            return {"valid": False, "reason": "Invalid word structure or missing center letter"}
+        if len(word) < 4:
+            return {"valid": False, "reason": "too short"}
+
+        if center_letter not in word:
+            return {"valid": False, "reason": "doesn't contain center letter"}
+
+        if not all(c in all_letters for c in word):
+            return {"valid": False, "reason": "Invalid characters in word"}
 
         conn = get_connection()
         cursor = conn.cursor()
@@ -100,19 +106,22 @@ class CheckWord(Resource):
             conn.close()
             return {"valid": False, "reason": "Word not in dictionary"}
 
-        cursor.execute("SELECT 1 FROM guesses WHERE session_id = %s AND word = %s", (session_id, word))
+        cursor.execute("SELECT 1 FROM guesses WHERE session_id = %s AND guessed_word = %s", (session_id, word))
         if cursor.fetchone():
             cursor.close()
             conn.close()
-            return {"valid": False, "reason": "Word already guessed"}
+            return {"valid": False, "reason": "already guessed"}
 
         points, is_pangram = calculate_score(word, all_letters)
-        cursor.execute("INSERT INTO guesses (session_id, word, score, is_pangram) VALUES (%s, %s, %s, %s)",
-                       (session_id, word, points, is_pangram))
 
-        cursor.execute("SELECT COUNT(*), SUM(score) FROM guesses WHERE session_id = %s", (session_id,))
+        cursor.execute("""
+            INSERT INTO guesses (session_id, guessed_word, is_valid, points) 
+            VALUES (%s, %s, %s, %s)
+        """, (session_id, word, True, points))
+
+        cursor.execute("SELECT COUNT(*), SUM(points) FROM guesses WHERE session_id = %s", (session_id,))
         count, total_score = cursor.fetchone()
-        total_score = float(total_score or 0)  # ✅ Fix: convert Decimal to float
+        total_score = float(total_score or 0)
         rank = get_rank(total_score)
 
         cursor.close()
@@ -127,6 +136,7 @@ class CheckWord(Resource):
             "words_found": count,
             "rank": rank
         }
+
     
 class RestartSession(Resource):
     def post(self):
