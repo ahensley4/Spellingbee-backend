@@ -49,10 +49,10 @@ if (!sessionId) {
     document.getElementById("wordColumn").innerHTML = [];
 
     renderLetters();
-  }
+  };
   xmlhttp.onerror = function () {
     console.error("Error creating session");
-  }
+  };
   xmlhttp.send();
 } else {
   letters = localStorage.getItem("letters");
@@ -130,17 +130,22 @@ function enterButton() {
       displayScore(score);
       displayRank(ranking);
       displayCount(count);
-      displayPopup("Nice! Word accepted.");
+
+      if (data.is_pangram) {
+        displayPopup("Pangram!! +7 bonus points!");
+      } else {
+        displayPopup("Nice! Word accepted.");
+      }
     } else {
       displayPopup(data.reason || "Invalid word.");
     }
     guessWord = "";
     displayString();
     inputActive = true;
-  }
+  };
   xmlhttp.onerror = function () {
     console.error("Error message");
-  }
+  };
   xmlhttp.send(JSON.stringify({
     word: guessWord,
     session_id: sessionId,
@@ -148,6 +153,7 @@ function enterButton() {
     center_letter: center
   }));
 }
+
 function keyPressed(event) {
   const key = event.key.toLowerCase();
   if (event.key === 'Enter') {
@@ -191,6 +197,7 @@ function displayPopup(displayMessage) {
     popup.style.display = 'none';
   }, 2000);
 }
+
 function closePopup() {
   const popup = document.getElementById('myPopup');
   popup.style.display = 'none';
@@ -290,7 +297,7 @@ function requestRestartSession() {
   };
   xmlhttp.onerror = function () {
     console.error("Error missing session ID");
-  }
+  };
   xmlhttp.send(JSON.stringify({ session_id: sessionId }));
 }
 
