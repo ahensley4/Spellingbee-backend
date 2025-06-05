@@ -7,12 +7,41 @@ let center = localStorage.getItem("center_letter");
 let elem = "";
 let isValid = "";
 let displayMessage = "";
-let point = 0; 
+let point = 0;
 let score = localStorage.getItem("total_score");
 let ranking = localStorage.getItem("rank");
 let count = localStorage.getItem("words_found");
 let guessWord = "";
-let list = localStorage.getItem("list");
+let guessedWords;
+try {
+  guessedWords = JSON.parse(localStorage.getItem("guessed_words")) || [];
+} catch (e) {
+  guessedWords = [];
+}
+let list = JSON.parse(localStorage.getItem("list")) [];
+renderGuessedWords();
+
+
+
+function handleValidGuess(word, response) {
+  guessedWords.push(word);  // save the guessed word
+  localStorage.setItem("guessed_words", JSON.stringify(guessedWords));
+
+  // Update score, rank, etc.
+  document.getElementById("score").innerText = response.total_score;
+  document.getElementById("rank").innerText = response.rank;
+}
+
+function renderGuessedWords() {
+  const listContainer = document.getElementById("guessedWordsList");
+  listContainer.innerHTML = "";
+
+  guessedWords.forEach(word => {
+    const li = document.createElement("li");
+    li.textContent = word;
+    listContainer.appendChild(li);
+  });
+}
 
 // create XMLHttpRequest object "xmlhttp" to request data from a web server
     const xmlhttp = new XMLHttpRequest();
@@ -238,6 +267,10 @@ function enterButton() {
     const xmlhttp = new XMLHttpRequest();
     // open the XMLHttpRequest object
     xmlhttp.open("POST", "http://localhost:8001/check_word"); 
+    console.log("Check result: ", data);
+        if (response.valid) {
+            handleValidGuess(currentWord, response);  // Pass the word and server response
+        }
 
     //xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.setRequestHeader("Content-type", "application/json");
@@ -257,13 +290,15 @@ function enterButton() {
         console.log("score: ", score);
         console.log("ranking: ", ranking);
         console.log("count: ", count);
-        console.log("Check result: ", data);
+        
         // if the word is valid
         if (isValid) {
             localStorage.setItem("total_score", data.total_score);
             localStorage.setItem("rank", data.rank);
             localStorage.setItem("words_found", data.words_found);
-            localStorage.setItem("list", guessWord);
+            list.push(guessWord);
+            localStorage.setItem("list", JSON.stringify(list));
+            displayList();
             // display popup message
             displayPopup(displayMessage);
             // display score
@@ -501,17 +536,14 @@ function displayCount(count) {
 }*/
 
 function displayList() {
-    let array = [];
-    console.log("displayList was called")
-    console.log("list before", array);
-    array.push(guessWord);
-    console.log("list after", array);
-    array = document.getElementById("wordList");
-    for (let i = 0; i < array.length; i++) {
-        const item = document.createElement("li");
-        item.textContent = array[i];
-        array.appendChild(item);
-    }
+    const wordColumn = document.getElementById("wordColumn");
+    wordColumn.innerHTML = "";
+    list.forEach(word => {
+        const span = document.createElement("span");
+        span.className = "word";
+        span.textContent = word;
+        wordColumn.appendChild(span);
+    });
 }
    
 
