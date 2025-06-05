@@ -186,8 +186,11 @@ function displayPopup(displayMessage) {
   const popupMessageElement = document.getElementById('popupMessage');
   popupMessageElement.textContent = displayMessage;
   popup.style.display = 'flex';
-}
 
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 2000);
+}
 function closePopup() {
   const popup = document.getElementById('myPopup');
   popup.style.display = 'none';
