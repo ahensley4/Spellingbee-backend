@@ -46,15 +46,23 @@ class DailyLetters(Resource):
         result = cursor.fetchone()
 
         if not result:
-            vowels = [ch for ch in "aeiou"]
+            vowels = [ch for ch in 'aeiou']
             consonants = [ch for ch in string.ascii_lowercase if ch not in vowels and ch != "y"]
-            letters = random.sample(consonants, 6) + [random.choice(vowels)]
+
+            center_letter = random.choice(vowels)
+            other_letters = random.sample([c for c in consonants if c != center_letter], 6)
+
+            letters = other_letters + [center_letter]
             random.shuffle(letters)
-            center_letter = random.choice(letters)
-            cursor.execute("INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
-                           (today, ''.join(letters), center_letter))
+
+            full_letters = ''.join(letters)
+
+            cursor.execute(
+                "INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
+                (today, full_letters, center_letter)
+            )
             conn.commit()
-            result = (''.join(letters), center_letter)
+            result = (full_letters, center_letter)
 
         cursor.close()
         conn.close()
@@ -106,7 +114,7 @@ class CheckWord(Resource):
             conn.close()
             return {"valid": False, "reason": "Word not in dictionary"}
 
-        cursor.execute("SELECT 1 FROM guesses WHERE session_id = %s AND guessed_word = %s", (session_id, word))
+        cursor.execute("SELECT 1 FROM guesses WHERE session_id = %s AND word = %s", (session_id, word))
         if cursor.fetchone():
             cursor.close()
             conn.close()
@@ -115,9 +123,9 @@ class CheckWord(Resource):
         points, is_pangram = calculate_score(word, all_letters)
 
         cursor.execute("""
-            INSERT INTO guesses (session_id, guessed_word, is_valid, points) 
-            VALUES (%s, %s, %s, %s)
-        """, (session_id, word, True, points))
+            INSERT INTO guesses (session_id, word, is_valid, points, is_pangram) 
+            VALUES (%s, %s, %s, %s, %s)
+        """, (session_id, word, True, points, is_pangram))
 
         cursor.execute("SELECT COUNT(*), SUM(points) FROM guesses WHERE session_id = %s", (session_id,))
         count, total_score = cursor.fetchone()
@@ -137,7 +145,6 @@ class CheckWord(Resource):
             "rank": rank
         }
 
-    
 class RestartSession(Resource):
     def post(self):
         data = request.get_json()
