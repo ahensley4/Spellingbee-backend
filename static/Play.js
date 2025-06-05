@@ -293,3 +293,8 @@ function requestRestartSession() {
   }
   xmlhttp.send(JSON.stringify({ session_id: sessionId }));
 }
+
+function resetGameSession() {
+  localStorage.clear();
+  location.reload();
+}

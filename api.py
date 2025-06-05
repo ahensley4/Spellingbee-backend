@@ -54,8 +54,10 @@ class DailyLetters(Resource):
 
             letters = other_letters + [center_letter]
             random.shuffle(letters)
-
             full_letters = ''.join(letters)
+
+            assert center_letter in full_letters
+            assert center_letter in vowels
 
             cursor.execute(
                 "INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
