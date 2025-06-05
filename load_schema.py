@@ -20,8 +20,12 @@ def main():
             for command in sql_commands.split(";"):
                 cmd = command.strip()
                 if cmd:
-                    print(f"⏳ Executing: {cmd[:60]}...")
+                    print(f" Executing: {cmd[:60]}...")
                     cursor.execute(cmd)
+
+                    #  Fix for 'Unread result found' errors
+                    if cmd.lower().startswith(("select", "show")):
+                        cursor.fetchall()
 
             connection.commit()
             print(" Schema loaded successfully.")
