@@ -7,6 +7,7 @@ from db import get_connection
 import random
 import string
 from decimal import Decimal
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -46,18 +47,29 @@ class DailyLetters(Resource):
         result = cursor.fetchone()
 
         if not result:
-            vowels = [ch for ch in 'aeiou']
-            consonants = [ch for ch in string.ascii_lowercase if ch not in vowels and ch != "y"]
+            # Load curated 7-letter pangram words
+            with open("tools/words.txt", "r") as f:
+                pangrams = [
+                    line.strip().lower()
+                    for line in f
+                    if len(line.strip()) == 7 and len(set(line.strip())) == 7
+                ]
 
-            center_letter = random.choice(vowels)
-            other_letters = random.sample([c for c in consonants if c != center_letter], 6)
+            chosen_word = random.choice(pangrams)
+            # Only use lowercase alphabet characters
+            letters = [ch for ch in set(chosen_word) if ch in string.ascii_lowercase]
 
-            letters = other_letters + [center_letter]
+            vowels = [ch for ch in letters if ch in "aeiou"]
+            center_letter = random.choice(vowels) if vowels else random.choice(letters)
+
+            if center_letter not in letters:
+                letters[0] = center_letter
+
             random.shuffle(letters)
             full_letters = ''.join(letters)
 
             assert center_letter in full_letters
-            assert center_letter in vowels
+            assert len(full_letters) == 7
 
             cursor.execute(
                 "INSERT INTO daily_letters (game_date, letters, center_letter) VALUES (%s, %s, %s)",
