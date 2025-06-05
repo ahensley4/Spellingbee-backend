@@ -18,7 +18,7 @@ try {
 } catch (e) {
   guessedWords = [];
 }
-let list = JSON.parse(localStorage.getItem("list")) [];
+let list = JSON.parse(localStorage.getItem("list")) || [];
 renderGuessedWords();
 
 
