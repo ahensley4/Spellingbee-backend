@@ -29,6 +29,7 @@ CREATE TABLE guesses (
   session_id CHAR(36),
   word VARCHAR(100),
   is_valid BOOLEAN,
+  is_pangram BOOLEAN DEFAULT FALSE,
   points INT,
   guessed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (session_id) REFERENCES game_sessions(session_id)

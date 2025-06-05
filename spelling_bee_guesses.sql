@@ -13,6 +13,5 @@ CREATE TABLE `guesses` (
   KEY `session_id` (`session_id`),
   CONSTRAINT `guesses_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `game_sessions` (`session_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-ALTER TABLE guesses ADD COLUMN is_pangram BOOLEAN DEFAULT 0;
 SELECT * FROM daily_letters WHERE LOCATE(center_letter, letters) = 0;
 UNLOCK TABLES;
