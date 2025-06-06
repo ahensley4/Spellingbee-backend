@@ -19,6 +19,7 @@ try {
 let list = JSON.parse(localStorage.getItem("list")) || [];
 renderGuessedWords();
 
+// function to display guessed valid word list
 function renderGuessedWords() {
   const listContainer = document.getElementById("guessedWordsList");
   if (listContainer) {
@@ -70,6 +71,7 @@ if (!sessionId) {
   renderLetters();
 }
 
+// function to display center letter at center position
 function renderLetters() {
   const index = letters.indexOf(center);
   for (let i = 0; i < letters.length; i++) {
@@ -85,10 +87,12 @@ function renderLetters() {
   }
 }
 
+// function to display user input
 function displayString() {
   document.getElementById("currentString").innerHTML = guessWord;
 }
 
+// function to display user input as a string
 function addChar(i) {
   if (inputActive) {
     guessWord += document.getElementById(i).innerHTML;
@@ -96,6 +100,7 @@ function addChar(i) {
   }
 }
 
+// function to delete user input one by one
 function deleteButton() {
   if (inputActive) {
     guessWord = guessWord.slice(0, -1);
@@ -205,7 +210,6 @@ function closePopup() {
 
 function displayScore(score) {
   switch (true) {
-    
     case score >= 0 && score < 10:
       elem = document.getElementById("Beginner");
       elem.innerHTML = score;
@@ -287,6 +291,8 @@ function restart() {
     displayScore(score);
     displayCount(count);
     displayList();
+    const tempList = document.getElementById("guessedWordsList");
+    tempList.innerHTML = "";
     requestRestartSession();
     displayString();
   } else {

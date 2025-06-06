@@ -124,7 +124,7 @@ p {
     font-weight: bold;
     border-radius: 50%; /*round shape */
     left: 50%;
-    top: 70%;
+    bottom: 5%;
     position: absolute;
     transform: translate(-50%, -50%); /* position in center */
 }
