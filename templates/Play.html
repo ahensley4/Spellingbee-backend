@@ -10,33 +10,37 @@
 </head>
 <body> 
 
-    <!-- Popup message -->
-    <div id="myPopup" class="popup-container">
-        <div class="popup-content">
-            <span class="close-button" onclick="closePopup()">&times;</span>
-            <p id="popupMessage"></p>
-        </div>
-    </div>
-
-    <!-- Current guessed word display -->
-    <p id="display"><span id="currentString"></span></p>  
+    <!-- Rank -->
     <div class="rank" id="rankString"></div>
+
+    <!-- Score circles -->
+    <div class="circle"> 
+        <div class="circle_item" id="Beginner"></div>
+        <div class="circle_item" id="Good"></div>
+        <div class="circle_item" id="Great"></div>
+        <div class="circle_item" id="Amazing"></div>
+        <div class="circle_item" id="Genius"></div>
+    </div>
 
     <!-- Word count -->
     <div class="count">
-        <div class="count_item" id="wordCount"></div>
         <div class="count_item" id="wordString">Word Count: </div>
+        <div class="count_item" id="wordCount"></div>
     </div>
 
-    <!-- Guessed words -->
-    <div>
+    <!-- Guessed words list top -->
+    <div class="guess">
         <h3>Guessed Words:</h3>
         <ul id="guessedWordsList"></ul>
     </div>
 
-    <div id="wordColumn" style="margin-top: 1rem;"></div>
+    <!-- Guessed word list bottom-->
+    <div class="word" id="wordColumn" style="margin-top: 1rem;"></div>
 
-    <!-- Letter boxes -->
+    <!-- User input -->
+    <p id="display"><span id="currentString"></span></p> 
+
+    <!-- Daily letter boxes -->
     <div class="square"> 
         <div class="square_item" id='0' onclick="addChar(0)"></div>
         <div class="square_item" id='1' onclick="addChar(1)"></div>
@@ -54,16 +58,16 @@
         <div class="button_item" onclick="enterButton()">Enter</div>
     </div>
 
+    <!-- Restart and reset buttons -->
     <button class="alert" onclick="restart()">RESTART</button>
-    <button onclick="resetGameSession()">Reset Game Session</button>
+    <button onclick="resetGameSession()">Reset Game Session</button> <!-- for developper -->
 
-    <!-- Score circles -->
-    <div class="circle"> 
-        <div class="circle_item" id="Beginner"></div>
-        <div class="circle_item" id="Good"></div>
-        <div class="circle_item" id="Great"></div>
-        <div class="circle_item" id="Amazing"></div>
-        <div class="circle_item" id="Genius"></div>
+    <!-- Popup message -->
+    <div class="popup-container" id="myPopup">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">&times;</span>
+            <p id="popupMessage"></p>
+        </div>
     </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='Play.js') }}"></script>

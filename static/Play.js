@@ -205,35 +205,36 @@ function closePopup() {
 
 function displayScore(score) {
   switch (true) {
+    
     case score >= 0 && score < 10:
       elem = document.getElementById("Beginner");
       elem.innerHTML = score;
       break;
     case score >= 10 && score < 50:
       elem = document.getElementById("Good");
-      elem.innerHTML = score;
       document.getElementById("Beginner").innerHTML = "";
+      elem.innerHTML = score;
       break;
     case score >= 50 && score < 75:
       elem = document.getElementById("Great");
-      elem.innerHTML = score;
       document.getElementById("Good").innerHTML = "";
       document.getElementById("Beginner").innerHTML = "";
+            elem.innerHTML = score;
       break;
     case score >= 75 && score < 100:
       elem = document.getElementById("Amazing");
-      elem.innerHTML = score;
       document.getElementById("Great").innerHTML = "";
       document.getElementById("Good").innerHTML = "";
       document.getElementById("Beginner").innerHTML = "";
+      elem.innerHTML = score;
       break;
     case score >= 100:
       elem = document.getElementById("Genius");
-      elem.innerHTML = score;
       document.getElementById("Amazing").innerHTML = "";
       document.getElementById("Great").innerHTML = "";
       document.getElementById("Good").innerHTML = "";
       document.getElementById("Beginner").innerHTML = "";
+      elem.innerHTML = score;
       break;
   }
 }
@@ -274,6 +275,14 @@ function restart() {
     count = localStorage.getItem("words_found");
     guessedWords = [];
     list = [];
+    elem = document.getElementById("Good");
+    elem.innerHTML = "";
+    elem = document.getElementById("Great");
+    elem.innerHTML = "";
+    document.getElementById("Amazing");
+    elem.innerHTML = "";
+    document.getElementById("Genius");
+    elem.innerHTML = "";
     displayRank(ranking);
     displayScore(score);
     displayCount(count);

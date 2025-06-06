@@ -8,7 +8,7 @@ def get_connection():
         host="127.0.0.1",  #  forces TCP
         port=3306,
         user="root",
-        password="wqdg2ppQ!@#$%^",  # replace if needed
+        password="NdkLQSt1?",  # replace if needed
         database="spelling_bee"
     )
 
