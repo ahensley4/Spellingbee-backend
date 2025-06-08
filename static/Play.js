@@ -155,7 +155,8 @@ function enterButton() {
     word: guessWord,
     session_id: sessionId,
     all_letters: letters,
-    center_letter: center
+    center_letter: center,
+    username: playerName
   }));
 }
 
@@ -174,6 +175,7 @@ function keyPressed(event) {
 }
 
 function clearButton() {
+  console.log("Clear button was pressed");
   guessWord = "";
   displayString();
 }
@@ -253,6 +255,7 @@ function displayCount(count) {
   elem.innerHTML = count;
 }
 
+// function to 
 function displayList() {
   const wordColumn = document.getElementById("wordColumn");
   wordColumn.innerHTML = "";
@@ -264,6 +267,7 @@ function displayList() {
   });
 }
 
+// function to restart the game
 var txt = "";
 function restart() {
   if (confirm("Are you sure to reset your score to 0?")) {

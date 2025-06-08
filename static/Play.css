@@ -108,11 +108,12 @@ p {
 .button > div {
     border: 1px solid #777;
     padding: 20px;
+    /*background-color: green;*/
 }
 
 /* restart button */
 .alert {
-    background-color: #04AA6D;
+    background-color: red;
     border: none;
     color: white; /* text color */
     padding: 20px;
@@ -131,15 +132,15 @@ p {
 
 /* whole popup message */
 .popup-container {
-        display: none; /* Hidden by default */
-        position: fixed; /* keep the position */
-        z-index: 1; /* display infront of the other element: -1 to display behind */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        justify-content: center; /* horizontally center */
-    }
+    display: none; /* Hidden by default */
+    position: fixed; /* keep the position */
+    z-index: 1; /* display infront of the other element: -1 to display behind */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center; /* horizontally center */
+}
 
 /* each popup message */
 .popup-content {
